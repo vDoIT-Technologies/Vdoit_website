@@ -1,0 +1,13 @@
+# Single-page app fallback.
+#
+# The router runs in the browser, so paths like /services and /work exist only
+# once the app has loaded. A direct hit or a refresh on one of them asks the
+# host for a file at that path, which was never built, and gets a 404.
+#
+# Serving index.html for every path lets React Router resolve it client-side.
+# Status 200 is a rewrite rather than a redirect, so the URL the visitor typed
+# stays in the address bar and deep links keep working.
+#
+# Vite copies everything in public/ to the root of dist/, which is what Netlify
+# publishes — so this file has to live here, not at the repo root.
+/*  /index.html  200
