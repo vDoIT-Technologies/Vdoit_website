@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Linkedin } from 'lucide-react';
 import {
   ADVANTAGES,
+  ADVISORY_BOARD,
   COMPANY_INFO,
-  FOUNDERS,
+  MANAGEMENT_TEAM,
+  OFFICES,
   TIMELINE_MILESTONES,
+  VISION_MISSION,
 } from '../data/companyData';
+import type { TeamMember } from '../types';
 import { Band, BandHeader } from '../components/ui/Band';
 import { EditorialRow } from '../components/ui/EditorialRow';
 import { PageHero } from '../components/layout/PageHero';
@@ -17,8 +21,9 @@ import { TONE } from '../lib/tone';
  * Tone tokens, read directly rather than through `useTone()` — the hook needs a
  * `Band` above it in the tree, and this page's markup *is* the band's children.
  */
-const dark = TONE.dark;
+const dark = TONE.ink;
 const light = TONE.light;
+const wash = TONE.wash;
 
 /** The company facts that sit under the story. A label and a value, no cards. */
 const STORY_FACTS = [
@@ -28,11 +33,68 @@ const STORY_FACTS = [
   { label: 'Delivery', value: COMPANY_INFO.corporateLocation },
 ];
 
+/**
+ * One person, on a light band. Shared by the management team and the advisory
+ * board so the two read as the same kind of thing at different altitudes.
+ */
+const PersonCard: React.FC<{ person: TeamMember; tone: Record<string, string> }> = ({
+  person,
+  tone,
+}) => (
+  <article className={`flex h-full flex-col border-t ${tone.hairline} pt-8`}>
+    {/* Initials as a typographic mark, not an avatar chip. */}
+    <p
+      aria-hidden="true"
+      className={`text-5xl font-semibold tracking-[-0.04em] ${tone.meta} md:text-6xl`}
+    >
+      {person.initials}
+    </p>
+
+    <h3 className={`mt-8 text-2xl font-semibold tracking-[-0.02em] ${tone.heading} text-balance`}>
+      {person.name}
+    </h3>
+    <p className={`mt-2 text-sm ${tone.accent}`}>{person.role}</p>
+
+    <p className={`mt-6 text-base leading-relaxed ${tone.body}`}>{person.bio}</p>
+
+    {person.focusAreas && person.focusAreas.length > 0 && (
+      <ul className={`mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm ${tone.meta}`}>
+        {person.focusAreas.map((area, index) => (
+          <li key={area} className={index > 0 ? `border-l ${tone.hairline} pl-4` : ''}>
+            {area}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {person.linkedinUrl && (
+      // `mt-auto` on the wrapper pins the control to the bottom of the card so
+      // a row of these lines up regardless of bio length.
+      <div className="mt-auto pt-10">
+        <a
+          href={person.linkedinUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`LinkedIn — ${person.name}`}
+          className={`group inline-flex items-center gap-2.5 rounded-full ${tone.ghostButton} px-6 py-3 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none ${tone.focusRing}`}
+        >
+          <Linkedin aria-hidden="true" className="h-4 w-4" />
+          LinkedIn
+          <ArrowUpRight
+            aria-hidden="true"
+            className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          />
+        </a>
+      </div>
+    )}
+  </article>
+);
+
 export const AboutPage: React.FC = () => (
   <>
-    {/* 1 — Dark hero. Same opening band on every page, so the header stays white. */}
+    {/* 1 — White hero, as on every page. */}
     <PageHero
-      eyebrow="About"
+      eyebrow="About us"
       title={
         <>
           Two founders, ten years,
@@ -54,14 +116,19 @@ export const AboutPage: React.FC = () => (
 
         <RevealItem>
           {/* The headline carries the band. Display size, light weight, tight tracking. */}
-          <p className={`text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.1] ${light.heading} text-balance`}>
+          <p
+            className={`text-3xl font-semibold leading-[1.1] tracking-[-0.03em] ${light.heading} text-balance md:text-5xl`}
+          >
             {COMPANY_INFO.headline}
           </p>
         </RevealItem>
 
         <RevealItem>
-          <p className={`mt-10 max-w-3xl text-lg md:text-xl leading-relaxed ${light.body}`}>
-            {COMPANY_INFO.subheadline}
+          <p className={`mt-10 max-w-3xl text-lg leading-relaxed ${light.body} md:text-xl`}>
+            Established in 2015 by two people, VDOIT is now a team of 100+
+            engineers that has delivered 200+ projects for 100+ clients across
+            India, the United States, and the UAE — with heavy, sustained
+            investment in R&amp;D behind it.
           </p>
         </RevealItem>
 
@@ -71,6 +138,19 @@ export const AboutPage: React.FC = () => (
           </p>
         </RevealItem>
       </RevealGroup>
+
+      {/* One image to break the prose before the footnotes. Decorative, so the
+          alt is empty and it is skipped by screen readers. */}
+      <Reveal delay={0.1}>
+        <img
+          src="/images/abstract-forms.jpg"
+          alt=""
+          loading="lazy"
+          width={1200}
+          height={800}
+          className="mt-20 aspect-[3/2] w-full rounded-3xl object-cover"
+        />
+      </Reveal>
 
       {/* Footnotes to the story — hairline-topped columns, one numeral each. */}
       <RevealGroup stagger={0.06} className="mt-20 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -87,83 +167,101 @@ export const AboutPage: React.FC = () => (
       </RevealGroup>
     </Band>
 
-    {/* 3 — Dark. Leadership. Two people, given the room two people deserve. */}
-    <Band tone="dark" size="lg">
-      <Reveal>
-        <BandHeader
-          eyebrow="Leadership"
-          title="The two people who answer for the work."
-          lede="Both founders review delivery directly. There is no layer between the person who scopes your system and the person accountable for it."
-        />
-      </Reveal>
-
-      <div className="mt-20 grid gap-20 lg:grid-cols-2 lg:gap-16">
-        {FOUNDERS.map((founder, index) => (
-          <Reveal key={founder.name} delay={index * 0.08}>
-            <article className={`border-t ${dark.hairline} pt-8`}>
-              {/* Initials as a typographic mark, not an avatar chip. */}
+    {/* 3 — Ink. Vision and mission, given the one hard-contrast band on the
+        page. Two statements, no icons, no cards. */}
+    <Band tone="ink" size="lg">
+      <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
+        {[VISION_MISSION.vision, VISION_MISSION.mission].map((entry, index) => (
+          <Reveal key={entry.label} delay={index * 0.08}>
+            <div className={`border-t ${dark.hairline} pt-8`}>
+              <p className={`text-xs font-medium uppercase tracking-[0.18em] ${dark.meta}`}>
+                {entry.label}
+              </p>
               <p
-                aria-hidden="true"
-                className={`text-6xl md:text-7xl font-semibold tracking-[-0.04em] ${dark.meta}`}
+                className={`mt-8 text-3xl font-semibold leading-[1.05] tracking-[-0.035em] ${dark.heading} text-balance md:text-5xl`}
               >
-                {founder.initials}
+                {entry.statement}
               </p>
-
-              <h3 className={`mt-10 text-3xl md:text-4xl font-semibold tracking-[-0.03em] ${dark.heading} text-balance`}>
-                {founder.name}
-              </h3>
-              <p className={`mt-3 text-base ${dark.accent}`}>{founder.role}</p>
-
-              <p className={`mt-6 text-xs font-medium uppercase tracking-[0.18em] ${dark.meta}`}>
-                {founder.experienceYears}
-              </p>
-              <p className={`mt-2 text-sm leading-relaxed ${dark.body}`}>
-                {founder.usExperienceHighlight}
-              </p>
-
-              <p className={`mt-8 max-w-xl text-base leading-relaxed ${dark.body}`}>
-                {founder.bio}
-              </p>
-
-              {/* Focus areas as hairline-separated text — chips would add six more boxes. */}
-              <ul className={`mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm ${dark.meta}`}>
-                {founder.focusAreas.map((area, areaIndex) => (
-                  <li
-                    key={area}
-                    className={areaIndex > 0 ? `border-l ${dark.hairline} pl-4` : ''}
-                  >
-                    {area}
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href={founder.linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`LinkedIn — ${founder.name}`}
-                className={`group mt-10 inline-flex items-center gap-2.5 rounded-full border border-white/20 px-6 py-3 text-sm font-medium ${dark.heading} transition-all hover:bg-white/10 hover:border-white/40 active:scale-[0.98] focus-visible:outline-none ${dark.focusRing}`}
-              >
-                <Linkedin aria-hidden="true" className="w-4 h-4" />
-                LinkedIn
-                <ArrowUpRight
-                  aria-hidden="true"
-                  className="w-4 h-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
-              </a>
-            </article>
+              <p className={`mt-8 max-w-xl text-lg leading-relaxed ${dark.body}`}>{entry.body}</p>
+            </div>
           </Reveal>
         ))}
       </div>
     </Band>
 
-    {/* 4 — Light. A decade on a spine: year, marker, entry. */}
+    {/* 4 — Light. The management team. */}
     <Band tone="light" size="lg">
       <Reveal>
         <BandHeader
-          eyebrow="Track record"
-          title="How the last decade actually went."
+          eyebrow="Management team"
+          title="The people who answer for the work."
+          lede="Both founders review delivery directly. There is no layer between the person who scopes your system and the person accountable for it."
         />
+      </Reveal>
+
+      <div className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+        {MANAGEMENT_TEAM.map((person, index) => (
+          <Reveal key={person.name} delay={index * 0.08}>
+            <PersonCard person={person} tone={light} />
+          </Reveal>
+        ))}
+      </div>
+    </Band>
+
+    {/* 5 — Wash. The advisory board, or an honest account of why it is not
+        listed yet. An empty grid with no explanation reads as a broken page. */}
+    <Band tone="wash" size="lg">
+      <Reveal>
+        <BandHeader
+          eyebrow="Advisory board"
+          title={
+            ADVISORY_BOARD.length > 0
+              ? 'The people we take advice from.'
+              : 'Being appointed, and named here when it is signed.'
+          }
+          lede={
+            ADVISORY_BOARD.length > 0
+              ? 'Independent counsel on strategy, governance, and the markets we operate in.'
+              : undefined
+          }
+        />
+      </Reveal>
+
+      {ADVISORY_BOARD.length > 0 ? (
+        <div className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+          {ADVISORY_BOARD.map((person, index) => (
+            <Reveal key={person.name} delay={index * 0.08}>
+              <PersonCard person={person} tone={wash} />
+            </Reveal>
+          ))}
+        </div>
+      ) : (
+        <Reveal className="mt-16">
+          <div className={`max-w-xl border-t ${wash.hairline} pt-8`}>
+            <p className={`text-lg leading-relaxed ${wash.body}`}>
+              We would rather leave this section empty than fill it with names
+              we have not confirmed. Advisers are listed here once appointments
+              are formalised.
+            </p>
+            <Link
+              to="/contact"
+              className={`group mt-8 inline-flex items-center gap-2 rounded-full ${wash.ghostButton} px-7 py-3.5 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none ${wash.focusRing}`}
+            >
+              Talk to the leadership team
+              <ArrowUpRight
+                aria-hidden="true"
+                className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </Link>
+          </div>
+        </Reveal>
+      )}
+    </Band>
+
+    {/* 6 — Light. A decade on a spine: year, marker, entry. */}
+    <Band tone="light" size="lg">
+      <Reveal>
+        <BandHeader eyebrow="Track record" title="How the last decade actually went." />
       </Reveal>
 
       <ol className="mt-16">
@@ -173,7 +271,9 @@ export const AboutPage: React.FC = () => (
               delay={index * 0.05}
               className="grid grid-cols-1 gap-6 py-10 md:grid-cols-[12rem_1fr] md:gap-12 md:py-14"
             >
-              <p className={`text-4xl md:text-5xl font-semibold tracking-[-0.03em] tabular-nums ${light.heading}`}>
+              <p
+                className={`text-4xl font-semibold tracking-[-0.03em] tabular-nums ${light.heading} md:text-5xl`}
+              >
                 {milestone.year}
               </p>
 
@@ -181,9 +281,11 @@ export const AboutPage: React.FC = () => (
               <div className={`relative md:border-l ${light.hairline} md:pl-12`}>
                 <span
                   aria-hidden="true"
-                  className="absolute -left-1 top-2.5 hidden h-2 w-2 rounded-full bg-slate-950 md:block"
+                  className="absolute -left-1 top-2.5 hidden h-2 w-2 rounded-full bg-brand-600 md:block"
                 />
-                <h3 className={`text-2xl md:text-3xl font-semibold tracking-tight ${light.heading} text-balance`}>
+                <h3
+                  className={`text-2xl font-semibold tracking-tight ${light.heading} text-balance md:text-3xl`}
+                >
                   {milestone.title}
                 </h3>
                 <p className={`mt-4 max-w-2xl text-base leading-relaxed ${light.body}`}>
@@ -196,13 +298,10 @@ export const AboutPage: React.FC = () => (
       </ol>
     </Band>
 
-    {/* 5 — Dark. Why us, as numbered rows. This used to be a six-card grid. */}
-    <Band tone="dark" size="lg">
+    {/* 7 — Wash. Why us, as numbered rows. This used to be a six-card grid. */}
+    <Band tone="wash" size="lg">
       <Reveal>
-        <BandHeader
-          eyebrow="Why VDOIT"
-          title="Six reasons, none of them a logo wall."
-        />
+        <BandHeader eyebrow="Why VDOIT" title="Six reasons, none of them a logo wall." />
       </Reveal>
 
       <div className="mt-16">
@@ -218,14 +317,16 @@ export const AboutPage: React.FC = () => (
       </div>
     </Band>
 
-    {/* 6 — Light close. The footer is dark, so this band has to be light. */}
+    {/* 8 — Light close. Offices, then the two ways to start a conversation. */}
     <Band tone="light" size="lg">
       <Reveal>
         <div className="max-w-4xl">
-          <h2 className={`text-4xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] ${light.heading} text-balance`}>
+          <h2
+            className={`text-4xl font-semibold leading-[1.02] tracking-[-0.03em] ${light.heading} text-balance md:text-6xl`}
+          >
             Work with us, or come work here.
           </h2>
-          <p className={`mt-6 max-w-2xl text-lg md:text-xl leading-relaxed ${light.body}`}>
+          <p className={`mt-6 max-w-2xl text-lg leading-relaxed ${light.body} md:text-xl`}>
             Both conversations start the same way — tell us what you are trying
             to build and what is standing in the way of it.
           </p>
@@ -238,7 +339,7 @@ export const AboutPage: React.FC = () => (
               Start a conversation
               <ArrowUpRight
                 aria-hidden="true"
-                className="w-4 h-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
             </Link>
             <Link
@@ -250,6 +351,22 @@ export const AboutPage: React.FC = () => (
           </div>
         </div>
       </Reveal>
+
+      <RevealGroup stagger={0.06} className="mt-20 grid gap-10 sm:grid-cols-3">
+        {OFFICES.map(office => (
+          <RevealItem key={office.country}>
+            <div className={`border-t ${light.hairline} pt-6`}>
+              <p className={`text-xs font-medium uppercase tracking-[0.18em] ${light.meta}`}>
+                {office.country}
+              </p>
+              <p className={`mt-3 text-xl font-semibold tracking-tight ${light.heading}`}>
+                {office.city}
+              </p>
+              <p className={`mt-3 text-sm leading-relaxed ${light.body}`}>{office.address}</p>
+            </div>
+          </RevealItem>
+        ))}
+      </RevealGroup>
     </Band>
   </>
 );

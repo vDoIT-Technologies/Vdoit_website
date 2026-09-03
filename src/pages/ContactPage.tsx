@@ -24,7 +24,7 @@ const EMPTY_FORM: InquiryFormData = {
 const TIMELINES = ['Urgent — under 4 weeks', '1–3 months', '3–6 months', 'Exploring options'];
 const BUDGETS = ['Under $25k', '$25k – $75k', '$75k – $200k', '$200k+', 'Not yet defined'];
 
-const labelClasses = 'block text-xs font-medium uppercase tracking-[0.18em] text-slate-500 mb-3';
+const labelClasses = 'block text-xs font-medium uppercase tracking-[0.18em] text-ink-mute mb-3';
 
 /**
  * Editorial form styling: bottom hairline only, no boxes. The focus state has
@@ -32,7 +32,7 @@ const labelClasses = 'block text-xs font-medium uppercase tracking-[0.18em] text
  * light up.
  */
 const fieldClasses =
-  'w-full rounded-none border-0 border-b border-slate-300 bg-transparent px-0 py-4 text-lg text-slate-950 placeholder:text-slate-400 transition-colors focus:border-slate-950 focus:outline-none focus-visible:ring-0';
+  'w-full rounded-none border-0 border-b border-line bg-transparent px-0 py-4 text-lg text-ink placeholder:text-ink-mute transition-colors focus:border-brand-600 focus:outline-none focus-visible:ring-0';
 
 export const ContactPage: React.FC = () => {
   const [form, setForm] = useState<InquiryFormData>(EMPTY_FORM);
@@ -89,13 +89,13 @@ export const ContactPage: React.FC = () => {
           <Reveal>
             {ticket ? (
               <div>
-                <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
+                <p className="text-xs font-medium uppercase tracking-[0.18em] text-ink-mute">
                   Inquiry received
                 </p>
-                <h2 className="mt-6 text-4xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-slate-950">
+                <h2 className="mt-6 text-4xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-ink">
                   We have it. Reference {ticket}.
                 </h2>
-                <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
+                <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
                   Keep that reference — quoting it in an email puts your message
                   straight in front of the person already reviewing it.
                 </p>
@@ -122,7 +122,7 @@ export const ContactPage: React.FC = () => {
                 </div>
 
                 {/* Reserved height, so confirming does not shift the layout. */}
-                <p role="status" aria-live="polite" className="mt-4 h-5 text-sm text-slate-600">
+                <p role="status" aria-live="polite" className="mt-4 h-5 text-sm text-ink-soft">
                   {copied ? 'Reference copied to clipboard' : ''}
                 </p>
 
@@ -132,7 +132,7 @@ export const ContactPage: React.FC = () => {
                     setForm(EMPTY_FORM);
                     setTicket(null);
                   }}
-                  className="mt-10 text-sm text-slate-600 underline underline-offset-4 transition-colors hover:text-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/40"
+                  className="mt-10 text-sm text-ink-soft underline underline-offset-4 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
                 >
                   Send another inquiry
                 </button>
@@ -313,38 +313,38 @@ export const ContactPage: React.FC = () => {
 
           <Reveal delay={0.1}>
             <div className="lg:sticky lg:top-32 lg:self-start">
-              <h2 className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
+              <h2 className="text-xs font-medium uppercase tracking-[0.18em] text-ink-mute">
                 Direct
               </h2>
 
               <dl className="mt-8 space-y-8">
-                <div className="border-t border-slate-200 pt-6">
-                  <dt className="text-sm text-slate-500">Leadership</dt>
+                <div className="border-t border-line pt-6">
+                  <dt className="text-sm text-ink-mute">Leadership</dt>
                   <dd className="mt-2">
                     <a
                       href={`mailto:${COMPANY_INFO.primaryEmail}`}
-                      className="text-lg text-slate-950 underline underline-offset-4 transition-colors hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/40"
+                      className="text-lg text-ink underline underline-offset-4 transition-colors hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
                     >
                       {COMPANY_INFO.primaryEmail}
                     </a>
                   </dd>
                 </div>
 
-                <div className="border-t border-slate-200 pt-6">
-                  <dt className="text-sm text-slate-500">General inquiries</dt>
+                <div className="border-t border-line pt-6">
+                  <dt className="text-sm text-ink-mute">General inquiries</dt>
                   <dd className="mt-2">
                     <a
                       href={`mailto:${COMPANY_INFO.inquiryEmail}`}
-                      className="text-lg text-slate-950 underline underline-offset-4 transition-colors hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/40"
+                      className="text-lg text-ink underline underline-offset-4 transition-colors hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
                     >
                       {COMPANY_INFO.inquiryEmail}
                     </a>
                   </dd>
                 </div>
 
-                <div className="border-t border-slate-200 pt-6">
-                  <dt className="text-sm text-slate-500">Delivery</dt>
-                  <dd className="mt-2 text-lg text-slate-950">
+                <div className="border-t border-line pt-6">
+                  <dt className="text-sm text-ink-mute">Delivery</dt>
+                  <dd className="mt-2 text-lg text-ink">
                     {COMPANY_INFO.corporateLocation}
                   </dd>
                 </div>
