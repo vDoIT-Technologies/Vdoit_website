@@ -70,7 +70,7 @@ export const ContactPage: React.FC = () => {
 
   return (
     <>
-      {/* 1 — Dark hero. */}
+      {/* 1 — White page header. */}
       <PageHero
         eyebrow="Contact"
         title={
@@ -80,11 +80,10 @@ export const ContactPage: React.FC = () => {
             not working.
           </>
         }
-        lede="Bring the constraint, not the brief. Our leadership reads every inquiry and comes back with an actual opinion — including when the answer is that you do not need us."
       />
 
-      {/* 2 — Light. Form plus a slim column of direct details. */}
-      <Band tone="light" size="lg">
+      {/* 2 — Light. The form itself, directly under the page title. */}
+      <Band tone="light" size="sm">
         <div className="grid gap-20 lg:grid-cols-[1.6fr_1fr] lg:gap-28">
           <Reveal>
             {ticket ? (

@@ -26,21 +26,13 @@ export const WorkPage: React.FC = () => (
           and one very large army.
         </>
       }
-      lede="Defence project tracking, GST fraud detection, a Chief Minister's dashboard, and a skilling library with twenty thousand books in it. Work that had to pass procurement before it could pass review."
     />
 
     {/* 2 — Light. Seven engagements in one screen: pick from the rail, the
-        panel changes. No scrolling through seven case studies to reach one. */}
-    <Band tone="light" size="lg">
+        panel changes. The rail sits directly under the title, so the list of
+        clients is the first thing on the page rather than a second headline. */}
+    <Band tone="light" size="sm">
       <Reveal>
-        <BandHeader
-          eyebrow="Selected work"
-          title="Seven engagements, in their own words."
-          lede="Each of these was delivered against a real constraint — an air gap, a compliance regime, or a department that had never had its data in one place."
-        />
-      </Reveal>
-
-      <Reveal className="mt-16">
         <WorkShowcase studies={CASE_STUDIES} label="Case studies" />
       </Reveal>
     </Band>

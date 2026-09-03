@@ -20,20 +20,13 @@ export const ProductsPage: React.FC = () => (
           we built and shipped.
         </>
       }
-      lede="Not case studies — products. Smart farming, meta-human education, decentralised identity, unified communications, and a photo booth that started inside a prison. Each one is running."
     />
 
-    {/* 2 — Light. The shelf. Filter, then open one without losing your place. */}
-    <Band tone="light" size="lg">
+    {/* 2 — Light. The shelf itself, straight under the title — the filters
+        are the first thing on screen. Detail opens in a dialog, so opening
+        one product never costs your place in the grid. */}
+    <Band tone="light" size="sm">
       <Reveal>
-        <BandHeader
-          eyebrow="The shelf"
-          title="Pick a category, open anything."
-          lede="Detail opens in place rather than on its own page, so comparing two products does not cost you two navigations."
-        />
-      </Reveal>
-
-      <Reveal className="mt-16">
         <ProductShowcase products={PRODUCTS} />
       </Reveal>
     </Band>

@@ -9,7 +9,7 @@ const [featured, ...rest] = LINKEDIN_POSTS;
 
 export const UpdatesPage: React.FC = () => (
   <>
-    {/* 1 — White hero. */}
+    {/* 1 — White page header. */}
     <PageHero
       eyebrow="Updates"
       title={
@@ -19,9 +19,8 @@ export const UpdatesPage: React.FC = () => (
           writing about.
         </>
       }
-      lede="Notes on enterprise AI, the work, and the people doing it — posted as we go, and mirrored here from LinkedIn."
     >
-      <div className="mt-11 flex flex-wrap items-center gap-4">
+      <div className="mt-8 flex flex-wrap items-center gap-4">
         <a
           href={COMPANY_INFO.linkedinUrl}
           target="_blank"
@@ -41,7 +40,7 @@ export const UpdatesPage: React.FC = () => (
 
     {/* 2 — Light. The featured post gets the room a featured post deserves. */}
     {featured && (
-      <Band tone="light" size="lg">
+      <Band tone="light" size="sm">
         <Reveal>
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-ink-mute">Featured</p>
         </Reveal>

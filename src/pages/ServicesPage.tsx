@@ -21,21 +21,13 @@ export const ServicesPage: React.FC = () => (
           One delivery team.
         </>
       }
-      lede="Strategy and engineering are not separate departments here. The people who scope your system are the people who ship it, and they are accountable for whether it works."
     />
 
-    {/* 2 — Light. The whole list closed fits on one screen; detail opens on
-        demand. Reading one service should not mean scrolling past five. */}
-    <Band tone="light" size="lg">
-      <Reveal>
-        <BandHeader
-          eyebrow="What we do"
-          title="Open the one you came for."
-          lede="Every practice below is a team that ships, not a capability slide. Expand any of them for the detail — features, stack, and what it actually changes."
-        />
-      </Reveal>
-
-      <div className="mt-16">
+    {/* 2 — Light. The list starts directly under the page title: a second
+        heading here would only restate it and push the first row off screen.
+        The whole list closed fits on one screen; detail opens on demand. */}
+    <Band tone="light" size="sm">
+      <div>
         {SERVICES.map((service, index) => (
           <Disclosure
             key={service.id}

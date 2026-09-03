@@ -32,23 +32,14 @@ export const JobsPage: React.FC = () => {
 
   return (
     <>
-      {/* 1 — Dark hero. */}
-      <PageHero
-        eyebrow={CAREERS_INFO.eyebrow}
-        title={CAREERS_INFO.headline}
-        lede={CAREERS_INFO.subheadline}
-      />
+      {/* 1 — White page header. */}
+      <PageHero eyebrow={CAREERS_INFO.eyebrow} title={CAREERS_INFO.headline} />
 
-      {/* 2 — Light. Why work here, as rows rather than four icon cards. */}
-      <Band tone="light" size="lg">
-        <Reveal>
-          <BandHeader
-            eyebrow="What you get"
-            title="Ownership, not a ticket queue."
-          />
-        </Reveal>
-
-        <div className="mt-16">
+      {/* 2 — Light. Why work here, as rows rather than four icon cards. The
+          page title already says what this is; a second heading here would
+          only push the first row down. */}
+      <Band tone="light" size="sm">
+        <div>
           {CAREERS_INFO.perks.map((perk, index) => (
             <Reveal key={perk.title} delay={index * 0.04}>
               <div className="grid grid-cols-[auto_1fr] items-start gap-6 border-t border-line py-8 md:grid-cols-[auto_1fr_1.2fr] md:gap-12 md:py-10">

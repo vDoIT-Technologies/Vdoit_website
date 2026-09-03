@@ -12,7 +12,7 @@ interface BandProps {
   tone?: Tone;
   id?: string;
   /** Vertical rhythm. `hero` is the only full-height option. */
-  size?: 'hero' | 'lg' | 'md' | 'sm' | 'none';
+  size?: 'hero' | 'page' | 'lg' | 'md' | 'sm' | 'none';
   className?: string;
   /** Set false when the band manages its own edge-to-edge content. */
   contained?: boolean;
@@ -21,6 +21,11 @@ interface BandProps {
 
 const SIZE = {
   hero: 'pt-36 pb-20 md:pt-48 md:pb-28',
+  // `page` is the interior-page header. Only the home page earns a full
+  // `hero`; on a page someone opened to read the content, a screen of title
+  // before the first row is a toll, not a welcome. Top padding still has to
+  // clear the fixed header.
+  page: 'pt-28 pb-6 md:pt-32 md:pb-8',
   // `none` is for bands that own their own height, such as a pinned section.
   none: '',
   lg: 'py-24 md:py-32',

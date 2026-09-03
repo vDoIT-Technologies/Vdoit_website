@@ -92,7 +92,7 @@ const PersonCard: React.FC<{ person: TeamMember; tone: Record<string, string> }>
 
 export const AboutPage: React.FC = () => (
   <>
-    {/* 1 — White hero, as on every page. */}
+    {/* 1 — White page header, as on every page. */}
     <PageHero
       eyebrow="About us"
       title={
@@ -102,11 +102,11 @@ export const AboutPage: React.FC = () => (
           no shelved prototypes.
         </>
       }
-      lede="VDOIT was built by engineers who had already carried enterprise systems in the US, and who came back with a low tolerance for software that only demos well."
     />
 
-    {/* 2 — Light. The story as prose at a reading measure, not a set of boxes. */}
-    <Band tone="light" size="lg">
+    {/* 2 — Light. The story as prose at a reading measure, not a set of boxes.
+        It opens directly under the page title. */}
+    <Band tone="light" size="sm">
       <RevealGroup stagger={0.08} className="max-w-4xl">
         <RevealItem>
           <p className={`text-xs font-medium uppercase tracking-[0.18em] ${light.meta} mb-8`}>
