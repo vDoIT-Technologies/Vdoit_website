@@ -1,6 +1,7 @@
 import React from 'react';
 import { Band } from '../ui/Band';
 import { Reveal, RevealGroup, RevealItem } from '../ui/Reveal';
+import { SparkField } from '../ui/SparkField';
 
 interface PageHeroProps {
   eyebrow: string;
@@ -10,31 +11,35 @@ interface PageHeroProps {
   children?: React.ReactNode;
 }
 
-/**
- * Every page opens on the same dark hero band, which is what lets the header
- * stay white-on-transparent everywhere. Home overrides this with its own hero.
- */
+/** Every page opens white, with the brand spark motif behind the type. */
 export const PageHero: React.FC<PageHeroProps> = ({ eyebrow, title, lede, children }) => (
-  <Band tone="dark" size="hero">
-    <RevealGroup trigger="mount" stagger={0.08} className="max-w-5xl">
+  <Band tone="light" size="hero" className="overflow-hidden">
+    <SparkField />
+
+    <RevealGroup trigger="mount" stagger={0.08} className="relative z-10 max-w-4xl">
       <RevealItem>
-        <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500 mb-8">
+        <span className="inline-flex items-center rounded-full bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">
           {eyebrow}
-        </p>
+        </span>
       </RevealItem>
       <RevealItem>
-        <h1 className="text-5xl sm:text-7xl font-semibold tracking-[-0.04em] leading-[0.98] text-white text-balance">
+        <h1 className="mt-8 text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.04em] text-ink sm:text-7xl">
           {title}
         </h1>
       </RevealItem>
       {lede && (
         <RevealItem>
-          <p className="mt-8 max-w-2xl text-lg md:text-xl leading-relaxed text-slate-400">
+          <p className="mt-7 max-w-2xl text-lg leading-relaxed text-ink-soft md:text-xl">
             {lede}
           </p>
         </RevealItem>
       )}
     </RevealGroup>
-    {children && <Reveal trigger="mount" delay={0.35}>{children}</Reveal>}
+
+    {children && (
+      <Reveal trigger="mount" delay={0.3} className="relative z-10">
+        {children}
+      </Reveal>
+    )}
   </Band>
 );

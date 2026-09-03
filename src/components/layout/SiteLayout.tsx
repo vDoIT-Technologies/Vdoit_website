@@ -15,11 +15,11 @@ const ScrollToTop: React.FC = () => {
 };
 
 export const SiteLayout: React.FC = () => (
-  <div className="min-h-screen bg-white text-slate-950 font-sans antialiased">
+  <div className="min-h-screen bg-white font-sans text-ink antialiased">
     <ScrollToTop />
     <a
       href="#main"
-      className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[60] focus:rounded-full focus:bg-white focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-slate-950"
+      className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[60] focus:rounded-full focus:bg-white focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-ink focus:ring-2 focus:ring-brand-500/40"
     >
       Skip to content
     </a>

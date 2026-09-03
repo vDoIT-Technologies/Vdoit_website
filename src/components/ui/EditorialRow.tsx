@@ -53,9 +53,10 @@ export const EditorialRow: React.FC<EditorialRowProps> = ({
         {interactive && (
           <ArrowUpRight
             aria-hidden="true"
-            className={`w-6 h-6 shrink-0 ${t.meta} transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:translate-x-1 ${
-              t.heading === 'text-white' ? 'group-hover:text-white' : 'group-hover:text-slate-950'
-            }`}
+            // headingHover is a whole literal class from the tone tokens —
+            // Tailwind scans source text, so a class built by interpolation
+            // would never be generated.
+            className={`w-6 h-6 shrink-0 ${t.meta} transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:translate-x-1 ${t.headingHover}`}
           />
         )}
       </span>

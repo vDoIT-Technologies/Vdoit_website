@@ -1,7 +1,25 @@
 @import "tailwindcss";
 
-/* Class-based dark mode: `.dark` on <html> drives every `dark:` variant. */
-@custom-variant dark (&:where(.dark, .dark *));
+/**
+ * VDOIT brand palette, taken from the wordmark: electric violet on white,
+ * near-black ink, and a lavender wash for quiet surfaces.
+ */
+@theme {
+  --color-brand-50: #f5f1ff;
+  --color-brand-100: #ebe3ff;
+  --color-brand-200: #d9c9ff;
+  --color-brand-300: #bfa1ff;
+  --color-brand-400: #9b6bff;
+  --color-brand-500: #7a3cff;
+  --color-brand-600: #5a18f0;
+  --color-brand-700: #4711c4;
+  --color-brand-800: #380e9b;
+
+  --color-ink: #0d0b1a;
+  --color-ink-soft: #4a4760;
+  --color-ink-mute: #7c7a90;
+  --color-line: #e8e6f0;
+}
 
 @layer base {
   body {
@@ -12,11 +30,6 @@
     font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   }
 
-  /* Theme swap is a deliberate, single transition — not a per-element cascade. */
-  body {
-    transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-                color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
 }
 
 /* Smooth custom scrollbars */
@@ -24,24 +37,14 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f5f1ff;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #d9c9ff;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: #020617;
-}
-.dark ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-}
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #9b6bff;
 }
 
 /* Track scrolls natively; the scrollbar itself is just visual noise. */
@@ -51,16 +54,6 @@
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
-}
-
-/* The WebGL hero fades in once it is ready, so it never pops. */
-@keyframes scene-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.scene-fade-in {
-  opacity: 0;
-  animation: scene-fade-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {

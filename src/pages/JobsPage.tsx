@@ -11,7 +11,7 @@ const ALL = 'All roles';
 
 // The page renders its own Bands, so tone comes from the tokens directly
 // rather than useTone() — which would read the default context out here.
-const dark = TONE.dark;
+const dark = TONE.ink;
 const light = TONE.light;
 
 export const JobsPage: React.FC = () => {
@@ -51,14 +51,14 @@ export const JobsPage: React.FC = () => {
         <div className="mt-16">
           {CAREERS_INFO.perks.map((perk, index) => (
             <Reveal key={perk.title} delay={index * 0.04}>
-              <div className="grid grid-cols-[auto_1fr] items-start gap-6 border-t border-slate-200 py-8 md:grid-cols-[auto_1fr_1.2fr] md:gap-12 md:py-10">
-                <span className="pt-2 text-xs font-mono tabular-nums text-slate-500">
+              <div className="grid grid-cols-[auto_1fr] items-start gap-6 border-t border-line py-8 md:grid-cols-[auto_1fr_1.2fr] md:gap-12 md:py-10">
+                <span className="pt-2 text-xs font-mono tabular-nums text-ink-mute">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-slate-950">
+                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-ink">
                   {perk.title}
                 </h3>
-                <p className="col-start-2 text-base leading-relaxed text-slate-600 md:col-start-3 md:pt-2">
+                <p className="col-start-2 text-base leading-relaxed text-ink-soft md:col-start-3 md:pt-2">
                   {perk.description}
                 </p>
               </div>
@@ -68,7 +68,7 @@ export const JobsPage: React.FC = () => {
       </Band>
 
       {/* 3 — Dark. The open roles: the centre of the page. */}
-      <Band tone="dark" size="lg">
+      <Band tone="ink" size="lg">
         <Reveal>
           <BandHeader
             eyebrow="Open roles"
@@ -92,8 +92,8 @@ export const JobsPage: React.FC = () => {
                   onClick={() => setDiscipline(item)}
                   className={`rounded-full px-5 py-2.5 text-sm transition-all active:scale-[0.98] focus-visible:outline-none ${dark.focusRing} ${
                     selected
-                      ? 'bg-white text-slate-950'
-                      : 'border border-white/15 text-slate-400 hover:text-white hover:border-white/40'
+                      ? 'bg-white text-ink'
+                      : 'border border-white/15 text-white/70 hover:text-white hover:border-white/40'
                   }`}
                 >
                   {item}
@@ -107,18 +107,18 @@ export const JobsPage: React.FC = () => {
           {openings.map((job, index) => (
             <Reveal key={job.id} delay={index * 0.03}>
               <article className="grid gap-6 border-t border-white/10 py-10 lg:grid-cols-[auto_1fr_auto] lg:gap-12">
-                <span className="text-xs font-mono tabular-nums text-slate-500 lg:pt-3">
+                <span className="text-xs font-mono tabular-nums text-white/50 lg:pt-3">
                   {String(index + 1).padStart(2, '0')}
                 </span>
 
                 <div className="min-w-0">
-                  <p className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
+                  <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
                     {job.discipline}
                   </p>
                   <h3 className="mt-4 text-2xl md:text-4xl font-semibold tracking-tight text-white">
                     {job.title}
                   </h3>
-                  <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-400">
+                  <p className="mt-4 max-w-xl text-base leading-relaxed text-white/70">
                     {job.summary}
                   </p>
 
@@ -135,7 +135,7 @@ export const JobsPage: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col gap-4 lg:items-end lg:text-right">
-                  <dl className="space-y-1 text-sm text-slate-400">
+                  <dl className="space-y-1 text-sm text-white/70">
                     <div>
                       <dt className="sr-only">Level</dt>
                       <dd>{job.level}</dd>
@@ -172,7 +172,7 @@ export const JobsPage: React.FC = () => {
               <p className="text-2xl font-semibold tracking-tight text-white">
                 Nothing open in {discipline} right now.
               </p>
-              <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-400">
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-white/70">
                 We still want to hear from strong people ahead of a role opening.
                 Send us your work and tell us what you want to build.
               </p>
@@ -192,10 +192,10 @@ export const JobsPage: React.FC = () => {
       <Band tone="light" size="lg">
         <Reveal>
           <div className="max-w-4xl">
-            <h2 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-slate-950 text-balance">
+            <h2 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-ink text-balance">
               No role that fits? Write anyway.
             </h2>
-            <p className="mt-6 max-w-2xl text-lg md:text-xl leading-relaxed text-slate-600">
+            <p className="mt-6 max-w-2xl text-lg md:text-xl leading-relaxed text-ink-soft">
               Send what you have built and what you want to build next. We read
               everything, and we have opened roles for people before the role
               existed.

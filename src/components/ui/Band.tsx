@@ -12,7 +12,7 @@ interface BandProps {
   tone?: Tone;
   id?: string;
   /** Vertical rhythm. `hero` is the only full-height option. */
-  size?: 'hero' | 'lg' | 'md' | 'sm';
+  size?: 'hero' | 'lg' | 'md' | 'sm' | 'none';
   className?: string;
   /** Set false when the band manages its own edge-to-edge content. */
   contained?: boolean;
@@ -20,7 +20,9 @@ interface BandProps {
 }
 
 const SIZE = {
-  hero: 'pt-32 pb-20 md:pt-44 md:pb-28',
+  hero: 'pt-36 pb-20 md:pt-48 md:pb-28',
+  // `none` is for bands that own their own height, such as a pinned section.
+  none: '',
   lg: 'py-24 md:py-32',
   md: 'py-16 md:py-24',
   sm: 'py-12 md:py-16',
@@ -28,7 +30,8 @@ const SIZE = {
 
 /**
  * A full-bleed horizontal band. The background runs edge to edge, the content
- * sits in the shared container. Alternating these is the whole design.
+ * sits in the shared container. White is the default; `wash` and `ink` are
+ * used sparingly to break the page into movements.
  */
 export const Band: React.FC<BandProps> = ({
   children,
