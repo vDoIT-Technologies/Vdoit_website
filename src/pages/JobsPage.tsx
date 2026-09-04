@@ -81,7 +81,7 @@ export const JobsPage: React.FC = () => {
                   type="button"
                   aria-pressed={selected}
                   onClick={() => setDiscipline(item)}
-                  className={`rounded-full px-5 py-2.5 text-sm transition-all active:scale-[0.98] focus-visible:outline-none ${dark.focusRing} ${
+                  className={`rounded-full px-5 py-3 text-sm transition-all active:scale-[0.98] focus-visible:outline-none ${dark.focusRing} ${
                     selected
                       ? 'bg-white text-ink'
                       : 'border border-white/15 text-white/70 hover:text-white hover:border-white/40'

@@ -5,10 +5,18 @@ import { COMPANY_INFO, OFFICES } from '../../data/companyData';
 import { Band } from '../ui/Band';
 import { Wordmark } from '../ui/Wordmark';
 import { Spark } from '../ui/SparkField';
+import { TONE } from '../../lib/tone';
 
-const linkClasses =
-  'text-ink-soft transition-colors hover:text-brand-600 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40';
+const wash = TONE.wash;
 
+const linkClasses = `text-ink-soft transition-colors hover:text-brand-600 rounded-full focus-visible:outline-none ${wash.focusRing}`;
+
+/**
+ * A `<p>`, not an `<h2>`. These are 12px column labels, and as headings they
+ * put four extra `<h2>`s into the outline of every page on the site, competing
+ * with the real section headings above them. Each column is a `<nav>` with an
+ * `aria-label`, so the grouping is still announced.
+ */
 const headingClasses = 'text-xs font-medium uppercase tracking-[0.18em] text-ink-mute mb-4';
 
 const COLUMNS = [
@@ -61,7 +69,7 @@ export const SiteFooter: React.FC = () => (
           <p className={headingClasses}>Have a project in mind?</p>
           <a
             href={`mailto:${COMPANY_INFO.inquiryEmail}`}
-            className="group inline-flex items-center gap-3 text-3xl font-semibold tracking-[-0.03em] text-ink transition-colors hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 md:text-5xl"
+            className={`group inline-flex items-center gap-3 rounded-full text-3xl font-semibold tracking-[-0.03em] text-ink transition-colors hover:text-brand-600 focus-visible:outline-none md:text-5xl ${wash.focusRing}`}
           >
             {COMPANY_INFO.inquiryEmail}
             <ArrowUpRight
@@ -73,7 +81,7 @@ export const SiteFooter: React.FC = () => (
 
         <Link
           to="/contact"
-          className="group inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-brand-600 px-7 py-3.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 md:self-auto"
+          className={`group inline-flex shrink-0 items-center gap-2 self-start rounded-full px-7 py-3.5 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none md:self-auto ${wash.solidButton} ${wash.focusRing}`}
         >
           Start a project
           <ArrowUpRight
@@ -95,7 +103,7 @@ export const SiteFooter: React.FC = () => (
             target="_blank"
             rel="noopener noreferrer"
             aria-label="VDOIT on LinkedIn"
-            className="mt-6 inline-flex h-10 w-10 items-center justify-center rounded-full border border-brand-200 text-ink-soft transition-all hover:border-brand-400 hover:bg-white hover:text-brand-600 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+            className={`mt-6 inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-200 text-ink-soft transition-all hover:border-brand-400 hover:text-brand-600 active:scale-[0.97] focus-visible:outline-none ${wash.focusRing}`}
           >
             <Linkedin aria-hidden="true" className="h-4 w-4" />
           </a>
@@ -103,7 +111,7 @@ export const SiteFooter: React.FC = () => (
 
         {COLUMNS.map(column => (
           <nav key={column.heading} aria-label={column.heading}>
-            <h2 className={headingClasses}>{column.heading}</h2>
+            <p className={headingClasses}>{column.heading}</p>
             <ul className="space-y-3 text-base">
               {column.links.map(link => (
                 <li key={link.to}>
@@ -117,7 +125,7 @@ export const SiteFooter: React.FC = () => (
         ))}
 
         <div>
-          <h2 className={headingClasses}>Where we are</h2>
+          <p className={headingClasses}>Where we are</p>
           <ul className="space-y-3 text-base">
             <li>
               <a

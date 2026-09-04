@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Check, Copy } from 'lucide-react';
 import { COMPANY_INFO, INDUSTRIES, SERVICES } from '../data/companyData';
 import type { InquiryFormData } from '../types';
@@ -27,18 +27,20 @@ const BUDGETS = ['Under $25k', '$25k – $75k', '$75k – $200k', '$200k+', 'Not
 const labelClasses = 'block text-xs font-medium uppercase tracking-[0.18em] text-ink-mute mb-3';
 
 /**
- * Editorial form styling: bottom hairline only, no boxes. The focus state has
- * to be carried by the rule darkening plus a ring, since there is no border to
- * light up.
+ * Editorial form styling: bottom hairline only, no boxes. The focus state is
+ * the rule darkening *and* a ring — this used to set `focus-visible:ring-0`,
+ * which left a 1px border colour change as the only cue on the whole form.
+ * A hairline shifting from #e8e6f0 to violet is not a focus indicator.
  */
 const fieldClasses =
-  'w-full rounded-none border-0 border-b border-line bg-transparent px-0 py-4 text-lg text-ink placeholder:text-ink-mute transition-colors focus:border-brand-600 focus:outline-none focus-visible:ring-0';
+  'w-full rounded-none border-0 border-b border-line bg-transparent px-0 py-4 text-lg text-ink placeholder:text-ink-mute transition-colors focus:border-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-4 focus-visible:ring-offset-white';
 
 export const ContactPage: React.FC = () => {
   const [form, setForm] = useState<InquiryFormData>(EMPTY_FORM);
   const [submitting, setSubmitting] = useState(false);
   const [ticket, setTicket] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const confirmationRef = useRef<HTMLHeadingElement>(null);
 
   const update = (field: keyof InquiryFormData) => (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -56,6 +58,14 @@ export const ContactPage: React.FC = () => {
       setTicket(reference);
     }, 700);
   };
+
+  // The submit button unmounts when the confirmation replaces the form, which
+  // used to drop focus to <body> and announce nothing. Moving focus to the
+  // confirmation heading both tells a screen reader what happened and leaves
+  // the keyboard somewhere sensible.
+  useEffect(() => {
+    if (ticket) confirmationRef.current?.focus();
+  }, [ticket]);
 
   const handleCopy = async () => {
     if (!ticket || !navigator.clipboard) return;
@@ -91,7 +101,13 @@ export const ContactPage: React.FC = () => {
                 <p className="text-xs font-medium uppercase tracking-[0.18em] text-ink-mute">
                   Inquiry received
                 </p>
-                <h2 className="mt-6 text-4xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-ink">
+                {/* tabIndex -1 so the effect above can move focus here without
+                    putting the heading into the tab order. */}
+                <h2
+                  ref={confirmationRef}
+                  tabIndex={-1}
+                  className={`mt-6 text-balance text-4xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-ink focus-visible:outline-none ${light.focusRing}`}
+                >
                   We have it. Reference {ticket}.
                 </h2>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
@@ -131,7 +147,7 @@ export const ContactPage: React.FC = () => {
                     setForm(EMPTY_FORM);
                     setTicket(null);
                   }}
-                  className="mt-10 text-sm text-ink-soft underline underline-offset-4 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+                  className={`mt-10 rounded-full text-sm text-ink-soft underline underline-offset-4 transition-colors hover:text-ink focus-visible:outline-none ${light.focusRing}`}
                 >
                   Send another inquiry
                 </button>

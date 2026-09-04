@@ -57,7 +57,7 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({ products }) =>
               type="button"
               onClick={() => setFilter(option.id)}
               aria-pressed={selected}
-              className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none ${t.focusRing} ${
+              className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none ${t.focusRing} ${
                 selected
                   ? 'bg-brand-600 text-white'
                   : `${t.chip} ${t.body} hover:border-brand-300 hover:bg-brand-50`
