@@ -1,8 +1,47 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { motion, useInView, useReducedMotion, type Variants } from 'motion/react';
 import { DURATION, EASE, fadeUp, staggerContainer } from '../../lib/motion';
 
 type Trigger = 'view' | 'mount';
+
+/**
+ * `static` renders plain markup with no inline opacity; `animate` renders the
+ * motion element that fades and rises.
+ */
+type Entrance = 'static' | 'animate';
+
+/**
+ * Whether this element should animate its entrance at all.
+ *
+ * Two things force `static`. The first is server rendering: pages are
+ * prerendered to static HTML at build time, and a `motion.div` with
+ * `initial="hidden"` serialises as `opacity: 0`, which would ship the whole
+ * site's copy to crawlers as hidden text. The second is content that is
+ * already on screen when hydration finishes — animating it in would mean
+ * fading out something the visitor is already reading.
+ *
+ * So: nothing animates until after mount, and then only what is below the
+ * fold, which is off screen while it flips and therefore never seen to pop.
+ */
+const useEntrance = (ref: React.RefObject<HTMLDivElement | null>): Entrance => {
+  const [entrance, setEntrance] = useState<Entrance>('static');
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (el.getBoundingClientRect().top < window.innerHeight) return;
+    setEntrance('animate');
+  }, [ref]);
+
+  return entrance;
+};
+
+/**
+ * A `RevealGroup` cascades its children through parent variants, so its items
+ * cannot decide independently — if the group renders static markup the items
+ * must too, or they would be left with variants and no parent to drive them.
+ */
+const EntranceContext = createContext<Entrance>('static');
 
 /**
  * Whether this element should be showing content yet.
@@ -60,10 +99,15 @@ export const Reveal: React.FC<RevealProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
+  const entrance = useEntrance(ref);
   const revealed = useRevealed(ref, trigger, reducedMotion);
 
-  if (reducedMotion) {
-    return <div className={className}>{children}</div>;
+  if (reducedMotion || entrance === 'static') {
+    return (
+      <div ref={ref} className={className}>
+        {children}
+      </div>
+    );
   }
 
   return (
@@ -102,22 +146,31 @@ export const RevealGroup: React.FC<RevealGroupProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
+  const entrance = useEntrance(ref);
   const revealed = useRevealed(ref, trigger, reducedMotion);
 
-  if (reducedMotion) {
-    return <div className={className}>{children}</div>;
+  if (reducedMotion || entrance === 'static') {
+    return (
+      <EntranceContext.Provider value="static">
+        <div ref={ref} className={className}>
+          {children}
+        </div>
+      </EntranceContext.Provider>
+    );
   }
 
   return (
-    <motion.div
-      ref={ref}
-      className={className}
-      variants={staggerContainer(stagger, delay)}
-      initial="hidden"
-      animate={revealed ? 'visible' : 'hidden'}
-    >
-      {children}
-    </motion.div>
+    <EntranceContext.Provider value="animate">
+      <motion.div
+        ref={ref}
+        className={className}
+        variants={staggerContainer(stagger, delay)}
+        initial="hidden"
+        animate={revealed ? 'visible' : 'hidden'}
+      >
+        {children}
+      </motion.div>
+    </EntranceContext.Provider>
   );
 };
 
@@ -136,8 +189,9 @@ export const RevealItem: React.FC<RevealItemProps> = ({
   variants = fadeUp,
 }) => {
   const reducedMotion = useReducedMotion();
+  const entrance = useContext(EntranceContext);
 
-  if (reducedMotion) {
+  if (reducedMotion || entrance === 'static') {
     return <div className={className}>{children}</div>;
   }
 

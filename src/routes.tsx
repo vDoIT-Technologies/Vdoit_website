@@ -1,0 +1,38 @@
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { SiteLayout } from './components/layout/SiteLayout';
+import { HomePage } from './pages/HomePage';
+import { ServicesPage } from './pages/ServicesPage';
+import { ProductsPage } from './pages/ProductsPage';
+import { WorkPage } from './pages/WorkPage';
+import { AboutPage } from './pages/AboutPage';
+import { UpdatesPage } from './pages/UpdatesPage';
+import { JobsPage } from './pages/JobsPage';
+import { ContactPage } from './pages/ContactPage';
+import { NotFoundPage } from './pages/NotFoundPage';
+
+/**
+ * The route tree, kept separate from the router that hosts it.
+ *
+ * `App` wraps this in a `BrowserRouter` for the browser; the prerender step
+ * wraps the same tree in a `StaticRouter` to render each URL to static HTML at
+ * build time. Both must see an identical tree, so it lives here rather than
+ * inside either entry point.
+ */
+export const AppRoutes: React.FC = () => (
+  <Routes>
+    <Route element={<SiteLayout />}>
+      <Route index element={<HomePage />} />
+      <Route path="/services" element={<ServicesPage />} />
+      <Route path="/products" element={<ProductsPage />} />
+      <Route path="/work" element={<WorkPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/updates" element={<UpdatesPage />} />
+      <Route path="/jobs" element={<JobsPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      {/* A genuine dead end. The host serves this file with a 404 status, so
+          a stale link is never indexed as a copy of the home page. */}
+      <Route path="*" element={<NotFoundPage />} />
+    </Route>
+  </Routes>
+);

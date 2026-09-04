@@ -23,6 +23,12 @@ export const COMPANY_INFO = {
   phone: '+91-8800665460',
   address: 'Gurugram, India',
   corporateLocation: 'Gurugram, India & Las Vegas, USA',
+  /**
+   * The canonical host. Every absolute URL on the site — canonical tags, OG
+   * images, the sitemap, JSON-LD — is built from this one value, so moving
+   * the site is a one-line change. No trailing slash.
+   */
+  siteUrl: 'https://www.vdoitech.com',
   linkedinUrl: 'https://www.linkedin.com/company/vdoitech/',
   /** From the LinkedIn company page. Will drift — refresh occasionally. */
   linkedinFollowers: '6,000+',

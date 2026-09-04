@@ -1,13 +1,11 @@
-# Single-page app fallback.
+# Netlify fallback rules. Kept for deploy portability; the site's own host is
+# Apache/nginx (see .htaccess and deploy/nginx.conf).
 #
-# The router runs in the browser, so paths like /services and /work exist only
-# once the app has loaded. A direct hit or a refresh on one of them asks the
-# host for a file at that path, which was never built, and gets a 404.
+# There is deliberately NO `/* /index.html 200` catch-all any more. Every route
+# is prerendered to its own file at build time (dist/services/index.html and so
+# on), so real files already answer every valid URL. A catch-all would serve the
+# home page's HTML for every path and throw away all of that.
 #
-# Serving index.html for every path lets React Router resolve it client-side.
-# Status 200 is a rewrite rather than a redirect, so the URL the visitor typed
-# stays in the address bar and deep links keep working.
-#
-# Vite copies everything in public/ to the root of dist/, which is what Netlify
-# publishes — so this file has to live here, not at the repo root.
-/*  /index.html  200
+# What is left is the dead-end: anything with no file behind it gets a genuine
+# 404, not a soft duplicate of the home page.
+/*  /404.html  404
