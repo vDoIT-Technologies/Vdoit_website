@@ -85,7 +85,7 @@ export const SERVICES: ServiceItem[] = [
     businessImpact: 'Reduces manual document analysis time by up to 85% while guaranteeing 100% intellectual property containment.',
     iconName: 'Sparkles',
     badge: 'Core Focus',
-    image: '/images/services/genai-llm.jpg',
+    image: '/images/services/genai-llm.webp',
     video: '/videos/services/genai-llm.mp4'
   },
   {
@@ -104,7 +104,7 @@ export const SERVICES: ServiceItem[] = [
     businessImpact: 'Automates up to 60% of repetitive operational touchpoints, accelerating transaction cycle times 4x.',
     iconName: 'Bot',
     badge: 'High ROI',
-    image: '/images/services/ai-agents.jpg',
+    image: '/images/services/ai-agents.webp',
     video: '/videos/services/ai-agents.mp4'
   },
   {
@@ -123,7 +123,7 @@ export const SERVICES: ServiceItem[] = [
     businessImpact: 'Lowers inventory carrying costs by 28% and mitigates high-value operational risk before it manifests.',
     iconName: 'TrendingUp',
     badge: 'Data-Driven',
-    image: '/images/services/predictive-ml.jpg',
+    image: '/images/services/predictive-ml.webp',
     video: '/videos/services/predictive-ml.mp4'
   },
   {
@@ -142,7 +142,7 @@ export const SERVICES: ServiceItem[] = [
     businessImpact: 'Eliminates 99.4% of manufacturing escape defects while operating at sub-50ms inference latencies.',
     iconName: 'ScanEye',
     badge: 'Industrial Grade',
-    image: '/images/services/computer-vision.jpg',
+    image: '/images/services/computer-vision.webp',
     video: '/videos/services/computer-vision.mp4'
   },
   {
@@ -161,7 +161,7 @@ export const SERVICES: ServiceItem[] = [
     businessImpact: 'Cuts infrastructure overhead by 35% while establishing unified data readiness for real-time AI models.',
     iconName: 'Database',
     badge: 'Foundation',
-    image: '/images/services/cloud-modernization.jpg',
+    image: '/images/services/cloud-modernization.webp',
     video: '/videos/services/cloud-modernization.mp4'
   },
   {
@@ -723,7 +723,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     metric: 'Predictive',
     metricLabel: 'Timeline, resource & risk forecasting',
-    image: '/images/work/mod-army-design-bureau.jpg',
+    image: '/images/work/mod-army-design-bureau.webp',
   },
   {
     id: 'mod-ai-ml-tableau',
@@ -741,7 +741,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     metric: 'Air-gapped',
     metricLabel: 'Models trained fully offline',
-    image: '/images/work/mod-ai-ml-tableau.jpg',
+    image: '/images/work/mod-ai-ml-tableau.webp',
   },
   {
     id: 'maharashtra-gst',
@@ -759,7 +759,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     metric: 'AI-led',
     metricLabel: 'Tax fraud detection & enforcement',
-    image: '/images/work/maharashtra-gst.jpg',
+    image: '/images/work/maharashtra-gst.webp',
   },
   {
     id: 'odisha-cm-dashboard',
@@ -778,7 +778,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     metric: '4',
     metricLabel: 'Flagship schemes on one dashboard',
-    image: '/images/work/odisha-cm-dashboard.jpg',
+    image: '/images/work/odisha-cm-dashboard.webp',
   },
   {
     id: 'beml',
@@ -796,7 +796,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     metric: 'Centralised',
     metricLabel: 'Product data across every line',
-    image: '/images/work/beml.jpg',
+    image: '/images/work/beml.webp',
   },
   {
     id: 'naco',
@@ -815,7 +815,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     metric: '10,000+',
     metricLabel: 'Play Store downloads',
-    image: '/images/work/naco.jpg',
+    image: '/images/work/naco.webp',
     fit: 'contain',
   },
   {
@@ -835,7 +835,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     metric: '20,000+',
     metricLabel: 'eBooks in the library',
-    image: '/images/work/nsdc-epustakalaya.jpg',
+    image: '/images/work/nsdc-epustakalaya.webp',
     fit: 'contain',
   },
 ];
@@ -858,7 +858,7 @@ export const MORE_ENGAGEMENTS: CaseStudy[] = [
     ],
     metric: '50,000+',
     metricLabel: 'Faculty assessable pan-India',
-    image: '/images/work/ncert-parakh.jpg',
+    image: '/images/work/ncert-parakh.webp',
     fit: 'contain',
   },
   {
@@ -876,7 +876,7 @@ export const MORE_ENGAGEMENTS: CaseStudy[] = [
     ],
     metric: '25',
     metricLabel: 'Software licences deployed',
-    image: '/images/work/cdac.jpg',
+    image: '/images/work/cdac.webp',
   },
   {
     id: 'tamil-nadu-rdpr',
@@ -893,7 +893,7 @@ export const MORE_ENGAGEMENTS: CaseStudy[] = [
     ],
     metric: '14',
     metricLabel: 'Software licences deployed',
-    image: '/images/work/tamil-nadu-rdpr.jpg',
+    image: '/images/work/tamil-nadu-rdpr.webp',
   },
   {
     id: 'smart-villages-vietnam',
@@ -912,7 +912,7 @@ export const MORE_ENGAGEMENTS: CaseStudy[] = [
     ],
     metric: '5',
     metricLabel: 'Modules scoped for deployment',
-    image: '/images/work/smart-villages-vietnam.jpg',
+    image: '/images/work/smart-villages-vietnam.webp',
   },
 ];
 
@@ -940,7 +940,7 @@ export const PRODUCTS: ProductItem[] = [
     ],
     marketNote:
       'Government estates known for their gardens — parliament and supreme court grounds among them — can run the same system.',
-    image: '/images/products/florja.jpg',
+    image: '/images/products/florja.webp',
   },
   {
     id: 'edyou',
@@ -956,7 +956,7 @@ export const PRODUCTS: ProductItem[] = [
     ],
     marketNote:
       'Suited to self-paced onboarding in government institutes — members could learn a new bill interactively rather than being handed a copy of it.',
-    image: '/images/products/edyou.jpg',
+    image: '/images/products/edyou.webp',
   },
   {
     id: 'ahl-embrace',
@@ -971,7 +971,7 @@ export const PRODUCTS: ProductItem[] = [
       'Voice and text interaction; the avatar can mimic any human voice',
       'Appointment booking and profile editing completed by conversation',
     ],
-    image: '/images/products/ahl-embrace.jpg',
+    image: '/images/products/ahl-embrace.webp',
   },
   {
     id: 'twin-protocol',
@@ -986,7 +986,7 @@ export const PRODUCTS: ProductItem[] = [
       'Custom-configured neural networks with OpenCog neural-symbolic techniques',
       'A marketplace ecosystem offering personalised user experiences',
     ],
-    image: '/images/products/twin-protocol.jpg',
+    image: '/images/products/twin-protocol.webp',
   },
   {
     id: 'sentience-wallet',
@@ -1002,7 +1002,7 @@ export const PRODUCTS: ProductItem[] = [
       'ERC-20 and ERC-721 compatibility across Ethereum and custom networks',
       'Built-in Web3 browser, iOS and Android access',
     ],
-    image: '/images/products/sentience-wallet.jpg',
+    image: '/images/products/sentience-wallet.webp',
     fit: 'contain',
   },
   {
@@ -1019,7 +1019,7 @@ export const PRODUCTS: ProductItem[] = [
     ],
     marketNote:
       'Applicable to citizen engagement and transparency programmes, and to combating misinformation at scale.',
-    image: '/images/products/dectec.jpg',
+    image: '/images/products/dectec.webp',
   },
   {
     id: 'ezeetelgo',
@@ -1037,7 +1037,7 @@ export const PRODUCTS: ProductItem[] = [
     ],
     marketNote:
       'Canada’s PBX market exceeds USD 200 million; 100,000 B2B users expected.',
-    image: '/images/products/ezeetelgo.jpg',
+    image: '/images/products/ezeetelgo.webp',
   },
   {
     id: 'pixnow',
@@ -1054,7 +1054,7 @@ export const PRODUCTS: ProductItem[] = [
     ],
     marketNote:
       'Historic and tourist monuments under the Archaeological Survey of India can offer the same to visitors.',
-    image: '/images/products/pixnow.jpg',
+    image: '/images/products/pixnow.webp',
     fit: 'contain',
   },
   {
@@ -1071,7 +1071,7 @@ export const PRODUCTS: ProductItem[] = [
     ],
     marketNote:
       'Directly transferable to cricket, football, badminton, and mass-participation events such as yoga.',
-    image: '/images/products/avp.jpg',
+    image: '/images/products/avp.webp',
   },
   {
     id: 'savemax',
@@ -1087,7 +1087,7 @@ export const PRODUCTS: ProductItem[] = [
     ],
     marketNote:
       'India lacks a centralised property database by property ID or MLS; the same model would address misinformation and fraud.',
-    image: '/images/products/savemax.jpg',
+    image: '/images/products/savemax.webp',
   },
   {
     id: 'feasibility-pro',
@@ -1103,44 +1103,44 @@ export const PRODUCTS: ProductItem[] = [
     ],
     marketNote:
       'Applicable to assessing real estate project viability and evaluating public-private partnership opportunities.',
-    image: '/images/products/feasibility-pro.jpg',
+    image: '/images/products/feasibility-pro.webp',
     fit: 'contain',
   },
 ];
 
 /** Client marks for the logo wall, lifted from the deck's client page. */
 export const CLIENT_LOGOS: ClientLogo[] = [
-  { name: 'NSDC', src: '/images/clients/nsdc.png' },
-  { name: 'NCERT', src: '/images/clients/ncert.png' },
-  { name: 'NACO', src: '/images/clients/naco.png' },
-  { name: 'MSPDCL', src: '/images/clients/mspdcl.png' },
-  { name: 'Hughes Systique', src: '/images/clients/hughes-systique.png' },
-  { name: 'Exicom', src: '/images/clients/exicom.png' },
-  { name: 'SingularityNET', src: '/images/clients/singularitynet.png' },
-  { name: 'Twin Protocol', src: '/images/clients/twin-protocol.png' },
-  { name: 'Dectec', src: '/images/clients/dectec.png' },
-  { name: 'edYOU', src: '/images/clients/edyou.png' },
-  { name: 'ezeetel', src: '/images/clients/ezeetel.png' },
-  { name: 'PixNow', src: '/images/clients/pixnow.png' },
-  { name: 'Save Max', src: '/images/clients/savemax.png' },
-  { name: 'AVP', src: '/images/clients/avp.png' },
-  { name: 'Florja', src: '/images/clients/florja.png' },
-  { name: 'Feasibility.pro', src: '/images/clients/feasibility-pro.png' },
-  { name: 'Awakening Health Lab', src: '/images/clients/awakening-health-lab.png' },
-  { name: 'The NorthCap University', src: '/images/clients/northcap-university.png' },
-  { name: 'Interteach', src: '/images/clients/interteach.png' },
-  { name: 'Globtier', src: '/images/clients/globtier.png' },
-  { name: 'DeReal', src: '/images/clients/dereal.png' },
-  { name: 'Shoofly', src: '/images/clients/shoofly.png' },
-  { name: 'Seven Cells', src: '/images/clients/seven-cells.png' },
-  { name: 'Sophia', src: '/images/clients/sophia.png' },
-  { name: 'SophiaVerse', src: '/images/clients/sophiaverse.png' },
-  { name: 'Transcroll', src: '/images/clients/transcroll.png' },
-  { name: 'fundPE', src: '/images/clients/fundpe.png' },
-  { name: 'ICF', src: '/images/clients/icf.png' },
-  { name: 'Pura Stays', src: '/images/clients/pura-stays.png' },
-  { name: 'Remitax', src: '/images/clients/remitax.png' },
-  { name: 'Rolling Stones India', src: '/images/clients/rolling-stones-india.png' },
-  { name: 'OneClick', src: '/images/clients/oneclick.png' },
-  { name: 'The Harmony', src: '/images/clients/the-harmony.png' },
+  { name: 'NSDC', src: '/images/clients/nsdc.webp' },
+  { name: 'NCERT', src: '/images/clients/ncert.webp' },
+  { name: 'NACO', src: '/images/clients/naco.webp' },
+  { name: 'MSPDCL', src: '/images/clients/mspdcl.webp' },
+  { name: 'Hughes Systique', src: '/images/clients/hughes-systique.webp' },
+  { name: 'Exicom', src: '/images/clients/exicom.webp' },
+  { name: 'SingularityNET', src: '/images/clients/singularitynet.webp' },
+  { name: 'Twin Protocol', src: '/images/clients/twin-protocol.webp' },
+  { name: 'Dectec', src: '/images/clients/dectec.webp' },
+  { name: 'edYOU', src: '/images/clients/edyou.webp' },
+  { name: 'ezeetel', src: '/images/clients/ezeetel.webp' },
+  { name: 'PixNow', src: '/images/clients/pixnow.webp' },
+  { name: 'Save Max', src: '/images/clients/savemax.webp' },
+  { name: 'AVP', src: '/images/clients/avp.webp' },
+  { name: 'Florja', src: '/images/clients/florja.webp' },
+  { name: 'Feasibility.pro', src: '/images/clients/feasibility-pro.webp' },
+  { name: 'Awakening Health Lab', src: '/images/clients/awakening-health-lab.webp' },
+  { name: 'The NorthCap University', src: '/images/clients/northcap-university.webp' },
+  { name: 'Interteach', src: '/images/clients/interteach.webp' },
+  { name: 'Globtier', src: '/images/clients/globtier.webp' },
+  { name: 'DeReal', src: '/images/clients/dereal.webp' },
+  { name: 'Shoofly', src: '/images/clients/shoofly.webp' },
+  { name: 'Seven Cells', src: '/images/clients/seven-cells.webp' },
+  { name: 'Sophia', src: '/images/clients/sophia.webp' },
+  { name: 'SophiaVerse', src: '/images/clients/sophiaverse.webp' },
+  { name: 'Transcroll', src: '/images/clients/transcroll.webp' },
+  { name: 'fundPE', src: '/images/clients/fundpe.webp' },
+  { name: 'ICF', src: '/images/clients/icf.webp' },
+  { name: 'Pura Stays', src: '/images/clients/pura-stays.webp' },
+  { name: 'Remitax', src: '/images/clients/remitax.webp' },
+  { name: 'Rolling Stones India', src: '/images/clients/rolling-stones-india.webp' },
+  { name: 'OneClick', src: '/images/clients/oneclick.webp' },
+  { name: 'The Harmony', src: '/images/clients/the-harmony.webp' },
 ];

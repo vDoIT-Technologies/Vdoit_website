@@ -143,7 +143,7 @@ export const AboutPage: React.FC = () => (
           alt is empty and it is skipped by screen readers. */}
       <Reveal delay={0.1}>
         <img
-          src="/images/abstract-forms.jpg"
+          src="/images/abstract-forms.webp"
           alt=""
           loading="lazy"
           width={1200}
