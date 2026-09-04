@@ -1,6 +1,7 @@
 import {
   ALL_ENGAGEMENTS,
   COMPANY_INFO,
+  FAQS,
   CREDENTIALS,
   FOUNDERS,
   JOB_OPENINGS,
@@ -206,6 +207,25 @@ const jobNodes = (datePosted: string) =>
     directApply: false,
   }));
 
+/**
+ * A `FAQPage` for the questions a page actually renders.
+ *
+ * Only ever emitted alongside a visible `FaqList`. Schema describing answers
+ * a visitor cannot find on the page is the kind of mismatch that gets markup
+ * ignored, and it deserves to be.
+ */
+const faqNode = (items: typeof FAQS, path: string) => ({
+  '@type': 'FAQPage',
+  '@id': `${canonicalFor(path)}#faq`,
+  mainEntity: items.map(item => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+});
+
+const generalFaqs = () => FAQS.filter(faq => !faq.serviceId);
+
 const PAGE_LABELS: Record<string, string> = {
   '/services': 'Services',
   '/products': 'Products',
@@ -255,6 +275,15 @@ export const jsonLdFor = (path: string, buildDate: string): object | null => {
         },
       }
     );
+
+    // Mirrors the FaqList on the page: this service's questions, then the
+    // first four general ones.
+    graph.push(
+      faqNode(
+        [...FAQS.filter(faq => faq.serviceId === service.id), ...generalFaqs().slice(0, 4)],
+        path
+      )
+    );
     return { '@context': 'https://schema.org', '@graph': graph };
   }
 
@@ -292,7 +321,7 @@ export const jsonLdFor = (path: string, buildDate: string): object | null => {
   if (label) graph.push(breadcrumbs([{ name: label, path }]));
 
   if (path === '/services') {
-    graph.push(...serviceNodes());
+    graph.push(...serviceNodes(), faqNode(generalFaqs(), path));
   }
 
   if (path === '/work') {

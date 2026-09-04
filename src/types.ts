@@ -144,3 +144,14 @@ export interface Credential {
   label: string;
   detail: string;
 }
+
+/** One question and its answer, for the FAQ blocks and `FAQPage` schema. */
+export interface FaqItem {
+  question: string;
+  answer: string;
+  /**
+   * Scopes the question to one service's detail page. Omitted for the general
+   * questions, which appear on /services and /contact.
+   */
+  serviceId?: string;
+}

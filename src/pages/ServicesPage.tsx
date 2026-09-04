@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { INDUSTRIES, SERVICES } from '../data/companyData';
+import { FAQS, INDUSTRIES, SERVICES } from '../data/companyData';
 import { Band, BandHeader } from '../components/ui/Band';
 import { Disclosure } from '../components/ui/Disclosure';
+import { FaqList } from '../components/ui/FaqList';
 import { HorizontalScroller, ScrollItem } from '../components/ui/HorizontalScroller';
 import { PageHero } from '../components/layout/PageHero';
 import { Reveal } from '../components/ui/Reveal';
@@ -158,7 +159,21 @@ export const ServicesPage: React.FC = () => (
       </Reveal>
     </Band>
 
-    {/* 4 — Light close. The footer is a wash band, so this one stays white. */}
+    {/* 4 — Wash. The questions people actually ask before emailing. Answers
+        sit in the markup whether or not a row is open, which is the point. */}
+    <Band tone="wash" size="lg">
+      <BandHeader
+        eyebrow="Questions"
+        title="Asked before the first email."
+        lede="If the answer you need is not here, the form on the contact page reaches a person who has read it."
+      />
+
+      <Reveal className="mt-16">
+        <FaqList items={FAQS.filter(faq => !faq.serviceId)} />
+      </Reveal>
+    </Band>
+
+    {/* 5 — Light close. The footer is a wash band, so this one stays white. */}
     <Band tone="light" size="lg">
       <Reveal>
         <div className="max-w-4xl">

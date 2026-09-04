@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { SERVICES } from '../data/companyData';
+import { FAQS, SERVICES } from '../data/companyData';
 import { Band, BandHeader } from '../components/ui/Band';
 import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 import { EditorialRow } from '../components/ui/EditorialRow';
+import { FaqList } from '../components/ui/FaqList';
 import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
 import { ServiceArtwork } from '../components/ui/ServiceArtwork';
 import { NotFoundPage } from './NotFoundPage';
@@ -32,6 +33,11 @@ export const ServiceDetailPage: React.FC = () => {
   if (!service) return <NotFoundPage />;
 
   const others = SERVICES.filter(item => item.id !== service.id);
+  // The service's own questions, then the general ones behind them.
+  const faqs = [
+    ...FAQS.filter(faq => faq.serviceId === service.id),
+    ...FAQS.filter(faq => !faq.serviceId).slice(0, 4),
+  ];
 
   return (
     <>
@@ -125,7 +131,15 @@ export const ServiceDetailPage: React.FC = () => {
         </Reveal>
       </Band>
 
-      {/* 4 — Light. The rest of the practice, so this is not a dead end. */}
+      {/* 4 — Wash. Questions, scoped to this practice first. */}
+      <Band tone="wash" size="lg">
+        <BandHeader eyebrow="Questions" title="What people ask about this." />
+        <Reveal className="mt-16">
+          <FaqList items={faqs} />
+        </Reveal>
+      </Band>
+
+      {/* 5 — Light. The rest of the practice, so this is not a dead end. */}
       <Band tone="light" size="lg">
         <BandHeader
           eyebrow="Also in the practice"
@@ -147,7 +161,7 @@ export const ServiceDetailPage: React.FC = () => {
         </div>
       </Band>
 
-      {/* 5 — Light close. */}
+      {/* 6 — Light close. */}
       <Band tone="light" size="lg">
         <Reveal>
           <div className="max-w-4xl">

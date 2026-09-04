@@ -9,6 +9,7 @@ import {
   ClientLogo,
   TeamMember,
   Credential,
+  FaqItem,
 } from '../types';
 
 export const COMPANY_INFO = {
@@ -586,6 +587,86 @@ export const OFFERINGS = [
   'Staff Augmentation',
   'Audits, Consultancy & Trainings',
   'On-Site & Off-Shore Delivery Model',
+];
+
+/**
+ * The FAQ, and the reason it exists.
+ *
+ * AI answer engines quote passages that answer a question directly, and a
+ * question-and-answer pair is the most quotable shape there is. It is also
+ * what a procurement reader looks for before they will send an email.
+ *
+ * Every answer here is drawn from facts already stated elsewhere on the site —
+ * the certifications, the offices, the engagement models, the delivery record.
+ * Nothing is claimed here that is not claimed there.
+ */
+export const FAQS: FaqItem[] = [
+  {
+    question: 'What does VDO IT Technologies do?',
+    answer:
+      'We build production-grade AI and digital platforms for enterprises and governments. The work covers six practices: generative AI and custom enterprise LLMs, autonomous AI agents, predictive machine learning, computer vision, cloud modernization and data engineering, and mission-critical custom software. We have delivered more than 200 projects for over 100 clients since 2015.',
+  },
+  {
+    question: 'Who has VDOIT built AI systems for?',
+    answer:
+      "Clients include India's Ministry of Defence (Army Design Bureau, and an offline AI/ML model inside an air-gapped environment), the GST Department of the Government of Maharashtra, the Chief Minister's office in Odisha, NACO, NSDC, NCERT, C-DAC, BEML India, and the Tamil Nadu Department of Rural Development. Alongside the public sector we build products for commercial clients across health, fintech, education and Web3.",
+  },
+  {
+    question: 'Is VDOIT certified for enterprise and government procurement?',
+    answer:
+      'Yes. VDOIT is certified to ISO 9001:2015 for quality management and ISO 27001:2013 for information security management, and is MSME registered with the Government of India. We are a registered Tableau partner and an affiliated IBM Watson partner. In 2023 the company was nominated for the Economic Times MSME Awards and named among the Top 10 Most Admired Companies in India.',
+  },
+  {
+    question: 'Where is VDOIT based?',
+    answer:
+      'The company was founded in 2015 and is headquartered in Gurugram, India, with offices in Las Vegas, USA and Bur Dubai, UAE. Delivery runs across India and the United States on an on-site and off-shore model, so work can be staffed in either timezone.',
+  },
+  {
+    question: 'Can VDOIT work with data that cannot leave our environment?',
+    answer:
+      'Yes, and it is a large part of what we do. For the Ministry of Defence we built and trained AI/ML models entirely offline to meet air-gapped security protocols, then fed the output into Tableau dashboards without any data leaving the secure perimeter. Our generative AI work uses private vector databases, zero-data-retention configurations and enterprise privacy firewalls for the same reason.',
+  },
+  {
+    question: 'How do engagements usually start?',
+    answer:
+      'With a constraint rather than a specification. Most engagements begin as one thing and turn out to be another, so the first conversation is about what is actually blocking you. We will say when the answer is that you do not need AI for it. From there the shape is usually development and system integration, managed IT services, staff augmentation, or an audit and consultancy piece.',
+  },
+  {
+    question: 'How long does a project take?',
+    answer:
+      'It depends on the constraint, and the honest range is wide. Urgent pieces run under four weeks; most build engagements sit between one and six months; platform and modernization programmes run longer and are staged. Tell us the deadline you are working to and we will tell you what is reachable inside it.',
+  },
+  {
+    question: 'How do I get a proposal from VDOIT?',
+    answer:
+      'Describe the problem through the contact form on this site, or email info@vdoit.in directly. Include the constraint, the deadline and any compliance requirements. You will hear back from someone who has read it, not an auto-responder.',
+  },
+
+  // Per-service. These appear on the matching detail page.
+  {
+    serviceId: 'genai-llm',
+    question: 'Will our data be used to train a model?',
+    answer:
+      'No. We deploy retrieval-augmented generation on private vector databases with zero-data-retention configuration and enterprise privacy firewalls, so your content is retrieved at query time rather than absorbed into weights. Where fine-tuning is genuinely required we do it on infrastructure you control.',
+  },
+  {
+    serviceId: 'ai-agents',
+    question: 'How is an AI agent different from a chatbot?',
+    answer:
+      'A chatbot answers. An agent reasons over a goal, calls your ERP, CRM and database APIs, verifies its own intermediate output, and escalates to a human when it should. We build them as multi-agent networks with human-in-the-loop oversight, for work like financial reconciliation, procurement and ticket resolution.',
+  },
+  {
+    serviceId: 'computer-vision',
+    question: 'Can computer vision run on our existing cameras?',
+    answer:
+      'Usually, yes. Most deployments read from existing CCTV or industrial camera feeds rather than requiring new hardware, with inference placed at the edge or in your cloud depending on latency and data-residency constraints.',
+  },
+  {
+    serviceId: 'cloud-modernization',
+    question: 'Do we have to migrate everything at once?',
+    answer:
+      'No, and we would advise against it. Modernization is staged: the data layer and the integration seams first, then the workloads that gain most from moving, with the legacy system running alongside until it is genuinely redundant.',
+  },
 ];
 
 export const MANAGEMENT_TEAM: TeamMember[] = [
