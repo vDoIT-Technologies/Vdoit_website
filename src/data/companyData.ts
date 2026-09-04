@@ -835,6 +835,15 @@ export const MORE_ENGAGEMENTS: CaseStudy[] = [
   },
 ];
 
+/**
+ * Every engagement in one list, in the order it should be read.
+ *
+ * `CASE_STUDIES` drives the showcase on /work and `MORE_ENGAGEMENTS` the rows
+ * beneath it, but routing, sitemaps, structured data and the detail pages all
+ * need the full set — so the spread lives here once rather than in each of them.
+ */
+export const ALL_ENGAGEMENTS: CaseStudy[] = [...CASE_STUDIES, ...MORE_ENGAGEMENTS];
+
 export const PRODUCTS: ProductItem[] = [
   {
     id: 'florja',

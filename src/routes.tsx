@@ -9,6 +9,8 @@ import { AboutPage } from './pages/AboutPage';
 import { UpdatesPage } from './pages/UpdatesPage';
 import { JobsPage } from './pages/JobsPage';
 import { ContactPage } from './pages/ContactPage';
+import { ServiceDetailPage } from './pages/ServiceDetailPage';
+import { CaseStudyDetailPage } from './pages/CaseStudyDetailPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 /**
@@ -24,8 +26,10 @@ export const AppRoutes: React.FC = () => (
     <Route element={<SiteLayout />}>
       <Route index element={<HomePage />} />
       <Route path="/services" element={<ServicesPage />} />
+      <Route path="/services/:slug" element={<ServiceDetailPage />} />
       <Route path="/products" element={<ProductsPage />} />
       <Route path="/work" element={<WorkPage />} />
+      <Route path="/work/:slug" element={<CaseStudyDetailPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/updates" element={<UpdatesPage />} />
       <Route path="/jobs" element={<JobsPage />} />

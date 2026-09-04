@@ -1,4 +1,4 @@
-import { COMPANY_INFO } from './companyData';
+import { ALL_ENGAGEMENTS, COMPANY_INFO, SERVICES } from './companyData';
 
 /** Canonical origin, no trailing slash. Single source for every absolute URL. */
 export const SITE_URL = COMPANY_INFO.siteUrl;
@@ -75,10 +75,48 @@ export const PAGE_SEO: Record<string, PageSeo> = {
   },
 };
 
+/** Trim to a length a search result will actually show, at a word boundary. */
+const clamp = (text: string, limit = 155): string => {
+  if (text.length <= limit) return text;
+  const cut = text.slice(0, limit);
+  return `${cut.slice(0, cut.lastIndexOf(' '))}…`;
+};
+
+/**
+ * Metadata for the detail routes, derived from the content rather than listed.
+ *
+ * Six services and eleven engagements would be seventeen hand-written entries
+ * to keep in step with `companyData.ts`. Deriving them means a new case study
+ * arrives with its title, description and share image already correct.
+ */
+const dynamicSeo = (path: string): PageSeo | null => {
+  const service = SERVICES.find(item => path === `/services/${item.id}`);
+  if (service) {
+    return {
+      title: `${service.title} | VDOIT`,
+      description: clamp(`${service.tagline} ${service.description}`),
+      image: service.image ? `${SITE_URL}${service.image}` : undefined,
+    };
+  }
+
+  const study = ALL_ENGAGEMENTS.find(item => path === `/work/${item.id}`);
+  if (study) {
+    return {
+      // Clamp the descriptive half only, so the suffix is never what gets cut.
+      title: `${clamp(`${study.client} — ${study.project}`, 52)} | VDOIT`,
+      description: clamp(`${study.summary} ${study.metric} ${study.metricLabel}.`),
+      image: `${SITE_URL}${study.image}`,
+      type: 'article',
+    };
+  }
+
+  return null;
+};
+
 /** The metadata for a path, falling back to the 404 entry for unknown routes. */
 export const seoFor = (pathname: string): PageSeo => {
   const path = pathname !== '/' ? pathname.replace(/\/+$/, '') : '/';
-  return PAGE_SEO[path] ?? PAGE_SEO['/404'];
+  return PAGE_SEO[path] ?? dynamicSeo(path) ?? PAGE_SEO['/404'];
 };
 
 /** Absolute canonical URL for a path. */

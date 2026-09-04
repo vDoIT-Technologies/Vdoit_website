@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { useTone } from './Band';
 
@@ -7,7 +8,10 @@ interface EditorialRowProps {
   title: string;
   description?: string;
   meta?: string;
+  /** An external destination, or anything outside the router. */
   href?: string;
+  /** An in-app route. Renders a `Link`, so navigation stays client-side. */
+  to?: string;
   onClick?: () => void;
 }
 
@@ -22,10 +26,11 @@ export const EditorialRow: React.FC<EditorialRowProps> = ({
   description,
   meta,
   href,
+  to,
   onClick,
 }) => {
   const t = useTone();
-  const interactive = Boolean(href || onClick);
+  const interactive = Boolean(href || to || onClick);
 
   const body = (
     <>
@@ -66,6 +71,14 @@ export const EditorialRow: React.FC<EditorialRowProps> = ({
   const shared = `group grid grid-cols-[auto_1fr_auto] items-start gap-6 md:gap-12 w-full text-left py-8 md:py-10 border-t ${t.hairline} transition-colors ${
     interactive ? `${t.rowHover} ${t.focusRing} focus-visible:outline-none` : ''
   }`;
+
+  if (to) {
+    return (
+      <Link to={to} className={shared}>
+        {body}
+      </Link>
+    );
+  }
 
   if (href) {
     return (

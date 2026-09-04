@@ -1,10 +1,9 @@
 import {
-  CASE_STUDIES,
+  ALL_ENGAGEMENTS,
   COMPANY_INFO,
   CREDENTIALS,
   FOUNDERS,
   JOB_OPENINGS,
-  MORE_ENGAGEMENTS,
   OFFICES,
   PRODUCTS,
   SERVICES,
@@ -114,38 +113,52 @@ const webPage = (path: string) => {
   };
 };
 
-/** Home needs no breadcrumb; every other page is one level down. */
-const breadcrumbs = (path: string, label: string) => ({
+/**
+ * Home needs no breadcrumb. Section pages are one level down and detail pages
+ * two, so this takes the trail rather than assuming a depth — and it must
+ * match the `Breadcrumbs` component the page actually renders.
+ */
+const breadcrumbs = (trail: Array<{ name: string; path: string }>) => ({
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-    { '@type': 'ListItem', position: 2, name: label, item: canonicalFor(path) },
+    ...trail.map((step, index) => ({
+      '@type': 'ListItem',
+      position: index + 2,
+      name: step.name,
+      item: canonicalFor(step.path),
+    })),
   ],
 });
 
 const serviceNodes = () =>
   SERVICES.map(service => ({
     '@type': 'Service',
-    '@id': `${SITE_URL}/services#${service.id}`,
+    '@id': `${SITE_URL}/services/${service.id}#service`,
     name: service.title,
     description: service.description,
     serviceType: service.tagline,
+    // Points at the detail page, so the index and the page it links to are
+    // the same entity rather than two competing ones.
+    url: `${SITE_URL}/services/${service.id}`,
     provider: { '@id': ORG_ID },
     areaServed: OFFICES.map(o => o.country),
   }));
 
 const caseStudyNodes = () =>
-  [...CASE_STUDIES, ...MORE_ENGAGEMENTS].map((study, index) => ({
+  ALL_ENGAGEMENTS.map((study, index) => ({
     '@type': 'ListItem',
     position: index + 1,
+    url: `${SITE_URL}/work/${study.id}`,
     item: {
-      '@type': 'CreativeWork',
-      '@id': `${SITE_URL}/work#${study.id}`,
-      name: `${study.client} — ${study.project}`,
+      '@type': 'Article',
+      '@id': `${SITE_URL}/work/${study.id}#article`,
+      headline: `${study.client} — ${study.project}`,
       description: study.summary,
-      about: study.sector,
+      articleSection: study.sector,
+      url: `${SITE_URL}/work/${study.id}`,
       image: `${SITE_URL}${study.image}`,
-      creator: { '@id': ORG_ID },
+      author: { '@id': ORG_ID },
     },
   }));
 
@@ -212,8 +225,71 @@ export const jsonLdFor = (path: string, buildDate: string): object | null => {
 
   const graph: object[] = [organization(), website(), webPage(path)];
 
+  // Detail pages carry the depth, so they get the richest markup: the full
+  // description and capability list for a service, the outcomes and the
+  // headline number for an engagement.
+  const service = SERVICES.find(item => path === `/services/${item.id}`);
+  if (service) {
+    graph.push(
+      breadcrumbs([
+        { name: 'Services', path: '/services' },
+        { name: service.title, path },
+      ]),
+      {
+        '@type': 'Service',
+        '@id': `${canonicalFor(path)}#service`,
+        name: service.title,
+        description: service.description,
+        serviceType: service.tagline,
+        url: canonicalFor(path),
+        provider: { '@id': ORG_ID },
+        areaServed: OFFICES.map(o => o.country),
+        image: service.image ? `${SITE_URL}${service.image}` : OG_IMAGE,
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: `${service.title} — capabilities`,
+          itemListElement: service.features.map(feature => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: feature },
+          })),
+        },
+      }
+    );
+    return { '@context': 'https://schema.org', '@graph': graph };
+  }
+
+  const study = ALL_ENGAGEMENTS.find(item => path === `/work/${item.id}`);
+  if (study) {
+    graph.push(
+      breadcrumbs([
+        { name: 'Success Stories', path: '/work' },
+        { name: `${study.client} — ${study.project}`, path },
+      ]),
+      {
+        '@type': 'Article',
+        '@id': `${canonicalFor(path)}#article`,
+        headline: `${study.client} — ${study.project}`,
+        description: study.summary,
+        articleSection: study.sector,
+        url: canonicalFor(path),
+        image: `${SITE_URL}${study.image}`,
+        author: { '@id': ORG_ID },
+        publisher: { '@id': ORG_ID },
+        dateModified: buildDate,
+        about: {
+          '@type': 'Organization',
+          name: study.client,
+        },
+        // The outcomes are the substance of the page; without them the schema
+        // describes the engagement without saying what was delivered.
+        articleBody: [study.summary, ...study.outcomes].join(' '),
+      }
+    );
+    return { '@context': 'https://schema.org', '@graph': graph };
+  }
+
   const label = PAGE_LABELS[path];
-  if (label) graph.push(breadcrumbs(path, label));
+  if (label) graph.push(breadcrumbs([{ name: label, path }]));
 
   if (path === '/services') {
     graph.push(...serviceNodes());

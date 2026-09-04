@@ -69,7 +69,10 @@ export const ServicesPage: React.FC = () => (
                   <img
                     src={service.image}
                     alt=""
+                    width={1200}
+                    height={800}
                     loading="lazy"
+                    decoding="async"
                     className="aspect-[4/3] h-full w-full object-cover md:aspect-auto"
                   />
                 </div>
@@ -81,6 +84,29 @@ export const ServicesPage: React.FC = () => (
 
       {/* Closes the list, so the last row has a bottom edge like every other. */}
       <div className="border-t border-line" />
+
+      {/* The panels above only exist in the page once opened, so these links
+          are also how the detail pages are found — by a visitor who would
+          rather read than click, and by a crawler that never clicks at all. */}
+      <Reveal>
+        <div className="mt-10">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-ink-mute">
+            Each practice in full
+          </p>
+          <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
+            {SERVICES.map(service => (
+              <li key={service.id}>
+                <Link
+                  to={`/services/${service.id}`}
+                  className="rounded-full text-base text-ink-soft underline decoration-brand-200 underline-offset-4 transition-colors hover:text-brand-600 hover:decoration-brand-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                >
+                  {service.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Reveal>
     </Band>
 
     {/* 3 — Ink. Industries as a scroll track. */}
