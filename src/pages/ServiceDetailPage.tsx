@@ -143,7 +143,7 @@ export const ServiceDetailPage: React.FC = () => {
       <Band tone="light" size="lg">
         <BandHeader
           eyebrow="Also in the practice"
-          title="The other five."
+          title="The rest of the practice."
           lede="Most engagements start as one of these and turn out to be another. They are delivered by one team, not five."
         />
 

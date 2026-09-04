@@ -50,7 +50,7 @@ export const UpdatesPage: React.FC = () => (
             href={featured.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group mt-8 block border-t border-line pt-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+            className="group mt-8 block border-t border-line pt-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
           >
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <span className="text-xs font-medium uppercase tracking-[0.18em] text-brand-600">
@@ -155,7 +155,7 @@ export const UpdatesPage: React.FC = () => (
               href={COMPANY_INFO.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group mt-8 inline-flex items-center gap-2 rounded-full border border-brand-200 px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-400 hover:bg-white active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+              className="group mt-8 inline-flex items-center gap-2 rounded-full border border-brand-200 px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-400 hover:bg-white active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-50"
             >
               Follow on LinkedIn
               <ArrowUpRight

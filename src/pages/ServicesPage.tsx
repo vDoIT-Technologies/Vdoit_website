@@ -8,7 +8,7 @@ import { FaqList } from '../components/ui/FaqList';
 import { HorizontalScroller, ScrollItem } from '../components/ui/HorizontalScroller';
 import { PageHero } from '../components/layout/PageHero';
 import { Reveal } from '../components/ui/Reveal';
-import { CONTAINER } from '../lib/tone';
+import { CONTAINER, TONE } from '../lib/tone';
 
 export const ServicesPage: React.FC = () => (
   <>
@@ -99,7 +99,7 @@ export const ServicesPage: React.FC = () => (
               <li key={service.id}>
                 <Link
                   to={`/services/${service.id}`}
-                  className="rounded-full text-base text-ink-soft underline decoration-brand-200 underline-offset-4 transition-colors hover:text-brand-600 hover:decoration-brand-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                  className={`rounded-full text-base text-ink-soft underline decoration-brand-200 underline-offset-4 transition-colors hover:text-brand-600 hover:decoration-brand-400 focus-visible:outline-none ${TONE.light.focusRing}`}
                 >
                   {service.title}
                 </Link>
@@ -198,7 +198,7 @@ export const ServicesPage: React.FC = () => (
             </Link>
             <Link
               to="/work"
-              className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+              className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               See the work
             </Link>

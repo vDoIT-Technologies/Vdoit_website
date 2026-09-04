@@ -31,7 +31,7 @@ export const PostThread: React.FC<PostThreadProps> = ({ posts }) => (
           href={post.linkedinUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="group block min-w-0 rounded-3xl border border-brand-100 bg-white p-6 transition-colors hover:border-brand-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 md:p-8"
+          className="group block min-w-0 rounded-3xl border border-brand-100 bg-white p-6 transition-colors hover:border-brand-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white md:p-8"
         >
           <div className="flex flex-wrap items-center gap-3">
             {/* The mark stands in as the author avatar. */}

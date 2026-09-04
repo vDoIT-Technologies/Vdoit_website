@@ -105,7 +105,7 @@ export const CaseStudyDetailPage: React.FC = () => {
               </div>
             </dl>
 
-            <div className={`mt-12 border-t-2 border-brand-600 pt-6`}>
+            <div className="mt-12 border-t-2 border-brand-600 pt-6">
               <p className="text-5xl font-semibold tracking-[-0.035em] text-ink md:text-6xl">
                 {study.metric}
               </p>
@@ -186,7 +186,7 @@ export const CaseStudyDetailPage: React.FC = () => {
             to="/work"
             className={`mt-12 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none ${light.ghostButton} ${light.focusRing}`}
           >
-            See all eleven
+            See every engagement
           </Link>
         </Reveal>
       </Band>

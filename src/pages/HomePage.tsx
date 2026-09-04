@@ -62,7 +62,7 @@ export const HomePage: React.FC = () => (
             </Link>
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+              className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               What we do
             </Link>
@@ -115,7 +115,7 @@ export const HomePage: React.FC = () => (
           />
           <Link
             to="/services"
-            className="group inline-flex shrink-0 items-center gap-2 rounded pb-2 text-sm font-medium text-brand-600 transition-colors hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+            className="group inline-flex shrink-0 items-center gap-2 rounded pb-2 text-sm font-medium text-brand-600 transition-colors hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
           >
             View all services
             <ArrowUpRight

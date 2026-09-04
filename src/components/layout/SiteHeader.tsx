@@ -110,7 +110,7 @@ export const SiteHeader: React.FC = () => {
         <Link
           to="/"
           aria-label="vdoit — home"
-          className="group rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+          className="group rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
         >
           <Wordmark className="text-[26px] [&>svg]:transition-transform [&>svg]:duration-700 [&>svg]:ease-out group-hover:[&>svg]:rotate-[135deg]" />
         </Link>
@@ -131,7 +131,7 @@ export const SiteHeader: React.FC = () => {
                 key={item.to}
                 to={item.to}
                 onMouseEnter={() => setHovered(item.to)}
-                className={`relative whitespace-nowrap rounded-full px-3.5 py-2 text-sm transition-colors xl:px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 ${
+                className={`relative whitespace-nowrap rounded-full px-3.5 py-2 text-sm transition-colors xl:px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                   lit ? 'text-white' : 'text-ink-soft hover:text-ink'
                 }`}
               >

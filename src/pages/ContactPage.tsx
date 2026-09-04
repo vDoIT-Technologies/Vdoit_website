@@ -338,7 +338,7 @@ export const ContactPage: React.FC = () => {
                   <dd className="mt-2">
                     <a
                       href={`mailto:${COMPANY_INFO.primaryEmail}`}
-                      className="text-lg text-ink underline underline-offset-4 transition-colors hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+                      className="text-lg text-ink underline underline-offset-4 transition-colors hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                     >
                       {COMPANY_INFO.primaryEmail}
                     </a>
@@ -350,7 +350,7 @@ export const ContactPage: React.FC = () => {
                   <dd className="mt-2">
                     <a
                       href={`mailto:${COMPANY_INFO.inquiryEmail}`}
-                      className="text-lg text-ink underline underline-offset-4 transition-colors hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+                      className="text-lg text-ink underline underline-offset-4 transition-colors hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                     >
                       {COMPANY_INFO.inquiryEmail}
                     </a>
