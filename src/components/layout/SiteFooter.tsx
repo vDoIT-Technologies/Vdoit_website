@@ -153,7 +153,7 @@ export const SiteFooter: React.FC = () => (
           &copy; {COMPANY_INFO.foundedYear}&ndash;2026 {COMPANY_INFO.name}. All
           rights reserved.
         </p>
-        <p>Founded by Narinder Kumar Kamra &amp; Neetu Gupta</p>
+        <p>Founded by Narinder Kamra &amp; Neetu Gupta</p>
       </div>
     </div>
   </Band>

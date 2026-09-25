@@ -68,7 +68,7 @@ export const COMPANY_INFO = {
 
 export const FOUNDERS: FounderProfile[] = [
   {
-    name: "Narinder Kumar Kamra",
+    name: "Narinder  Kamra",
     role: "Co-Founder & Chief Executive Officer",
     experienceYears: "15+ Years US & Global Tech Leadership",
     usExperienceHighlight:
@@ -496,7 +496,7 @@ export const TIMELINE_MILESTONES = [
     year: "2015",
     title: "Founding & US-Grade Engineering Standards",
     description:
-      "Founded by Narinder Kumar Kamra and Neetu Gupta following 15+ years of US and global enterprise technology experience. Established the core vision of high-value, client-first digital engineering.",
+      "Founded by Narinder  Kamra and Neetu Gupta following 15+ years of US and global enterprise technology experience. Established the core vision of high-value, client-first digital engineering.",
   },
   {
     year: "2018",
@@ -846,7 +846,7 @@ export const FAQS: FaqItem[] = [
 
 export const MANAGEMENT_TEAM: TeamMember[] = [
   {
-    name: "Narinder Kumar Kamra",
+    name: "Narinder  Kamra",
     role: "Co-Founder & Chief Executive Officer",
     initials: "NK",
     image: "/images/team/narinder-kamra.webp",
