@@ -21,6 +21,27 @@ const EMPTY_FORM: InquiryFormData = {
   projectDescription: '',
 };
 
+/**
+ * Where the mail relay lives. Empty means same origin, which is the production
+ * shape: nginx and Apache both proxy `/api` to the backend on the same host,
+ * so the browser never makes a cross-origin request. Development sets
+ * `VITE_API_BASE_URL=http://localhost:4000`.
+ */
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? '';
+
+/**
+ * What the visitor is told when a send fails. Deliberately never "something
+ * went wrong": each case ends somewhere they can act, because the form is the
+ * only route in on this page.
+ */
+const FAILURE = {
+  invalid: 'Some of those details did not come through. Check the required fields and try again.',
+  throttled:
+    'That is several messages from this connection in a short window. Give it a few minutes, or',
+  refused: 'The message could not be sent just now. Please',
+  offline: 'We could not reach the server — check your connection and try again, or',
+} as const;
+
 const TIMELINES = ['Urgent — under 4 weeks', '1–3 months', '3–6 months', 'Exploring options'];
 const BUDGETS = ['Under $25k', '$25k – $75k', '$75k – $200k', '$200k+', 'Not yet defined'];
 
@@ -39,6 +60,10 @@ export const ContactPage: React.FC = () => {
   const [form, setForm] = useState<InquiryFormData>(EMPTY_FORM);
   const [submitting, setSubmitting] = useState(false);
   const [ticket, setTicket] = useState<string | null>(null);
+  const [failure, setFailure] = useState<string | null>(null);
+  /** The honeypot's value. A real visitor never sees the field, so this stays
+      empty; a bot filling every input it finds is what gives it away. */
+  const [honeypot, setHoneypot] = useState('');
   const [copied, setCopied] = useState(false);
   const confirmationRef = useRef<HTMLHeadingElement>(null);
 
@@ -46,17 +71,44 @@ export const ContactPage: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => setForm(current => ({ ...current, [field]: event.target.value }));
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setSubmitting(true);
+    setFailure(null);
 
-    // Client-side only, exactly as before: there is no backend, and pretending
-    // otherwise would silently drop real inquiries.
-    const reference = `VDO-AI-${Math.floor(1000 + Math.random() * 9000)}`;
-    window.setTimeout(() => {
-      setSubmitting(false);
+    try {
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, website: honeypot }),
+      });
+
+      // A proxy in front of the API can answer with HTML, so a failed parse is
+      // a real outcome rather than an exception to swallow.
+      const payload = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        setFailure(response.status === 400 ? FAILURE.invalid
+          : response.status === 429 ? FAILURE.throttled
+          : FAILURE.refused);
+        return;
+      }
+
+      // The reference is issued by the server so the number shown here is the
+      // one on the email. Without it there is nothing to confirm, so a 2xx
+      // that omits it is treated as a failure rather than a silent success.
+      const reference: unknown = payload?.reference;
+      if (typeof reference !== 'string' || !reference) {
+        setFailure(FAILURE.refused);
+        return;
+      }
+
       setTicket(reference);
-    }, 700);
+    } catch {
+      setFailure(FAILURE.offline);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   // The submit button unmounts when the confirmation replaces the form, which
@@ -318,6 +370,49 @@ export const ContactPage: React.FC = () => {
                     className={`${fieldClasses} resize-y`}
                   />
                 </div>
+
+                {/* Honeypot. Positioned off-screen rather than `sr-only`,
+                    which keeps a field readable to screen readers — and a
+                    mystery input is worse for that visitor than for a bot.
+                    Hidden from assistive tech and out of the tab order, so it
+                    only ever reaches something filling inputs blind. */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -left-[9999px] h-px w-px overflow-hidden"
+                >
+                  <label htmlFor="website">Website</label>
+                  <input
+                    id="website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={event => setHoneypot(event.target.value)}
+                  />
+                </div>
+
+                {failure && (
+                  <p
+                    role="alert"
+                    className="mt-10 border-l-2 border-brand-600 pl-5 text-base leading-relaxed text-ink"
+                  >
+                    {failure === FAILURE.invalid ? (
+                      failure
+                    ) : (
+                      <>
+                        {failure}{' '}
+                        <a
+                          href={`mailto:${COMPANY_INFO.inquiryEmail}`}
+                          className={`font-medium text-brand-600 underline underline-offset-4 transition-colors hover:text-brand-700 focus-visible:outline-none ${light.focusRing}`}
+                        >
+                          email {COMPANY_INFO.inquiryEmail}
+                        </a>{' '}
+                        directly.
+                      </>
+                    )}
+                  </p>
+                )}
 
                 <button
                   type="submit"
