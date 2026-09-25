@@ -24,7 +24,7 @@ const EMPTY_FORM: InquiryFormData = {
 const TIMELINES = ['Urgent — under 4 weeks', '1–3 months', '3–6 months', 'Exploring options'];
 const BUDGETS = ['Under $25k', '$25k – $75k', '$75k – $200k', '$200k+', 'Not yet defined'];
 
-const labelClasses = 'block text-xs font-medium uppercase tracking-[0.18em] text-ink-mute mb-3';
+const labelClasses = 'block text-xs font-medium uppercase tracking-[0.18em] text-ink-mute mb-2';
 
 /**
  * Editorial form styling: bottom hairline only, no boxes. The focus state is
@@ -33,7 +33,7 @@ const labelClasses = 'block text-xs font-medium uppercase tracking-[0.18em] text
  * A hairline shifting from #e8e6f0 to violet is not a focus indicator.
  */
 const fieldClasses =
-  'w-full rounded-none border-0 border-b border-line bg-transparent px-0 py-4 text-lg text-ink placeholder:text-ink-mute transition-colors focus:border-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-4 focus-visible:ring-offset-white';
+  'w-full rounded-none border-0 border-b border-line bg-transparent px-0 py-3 text-lg text-ink placeholder:text-ink-mute transition-colors focus:border-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-4 focus-visible:ring-offset-white';
 
 export const ContactPage: React.FC = () => {
   const [form, setForm] = useState<InquiryFormData>(EMPTY_FORM);
@@ -92,8 +92,13 @@ export const ContactPage: React.FC = () => {
         }
       />
 
-      {/* 2 — Light. The form itself, directly under the page title. */}
-      <Band tone="light" size="sm">
+      {/* 2 — Light. The form itself, directly under the page title.
+          Explicit padding rather than `size="sm"`: that token's `py-12 md:py-16`
+          stacked on the page header's own bottom padding put ~96px of white
+          between the title and the first label, on a page whose whole job is
+          the form. The bottom keeps the full band padding — it is the gap to
+          the footer, not a gap inside one thought. */}
+      <Band tone="light" size="none" className="pb-12 pt-2 md:pb-16 md:pt-4">
         <div className="grid gap-20 lg:grid-cols-[1.6fr_1fr] lg:gap-28">
           <Reveal>
             {ticket ? (
@@ -127,7 +132,7 @@ export const ContactPage: React.FC = () => {
                   </button>
 
                   <a
-                    href={`mailto:${COMPANY_INFO.primaryEmail}?subject=${encodeURIComponent(
+                    href={`mailto:${COMPANY_INFO.inquiryEmail}?subject=${encodeURIComponent(
                       `Follow-up on inquiry ${ticket}`
                     )}`}
                     className={`inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none ${light.solidButton} ${light.focusRing}`}
@@ -154,7 +159,7 @@ export const ContactPage: React.FC = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate={false}>
-                <div className="grid gap-10 sm:grid-cols-2">
+                <div className="grid gap-8 sm:grid-cols-2">
                   <div>
                     <label htmlFor="fullName" className={labelClasses}>
                       Your name (required)
@@ -298,7 +303,7 @@ export const ContactPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-10">
+                <div className="mt-8">
                   <label htmlFor="projectDescription" className={labelClasses}>
                     What is the constraint? (required)
                   </label>
@@ -318,7 +323,7 @@ export const ContactPage: React.FC = () => {
                   type="submit"
                   disabled={submitting}
                   aria-busy={submitting}
-                  className={`mt-12 inline-flex h-14 min-w-[16rem] items-center justify-center rounded-full px-8 text-sm font-medium transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:active:scale-100 focus-visible:outline-none ${light.solidButton} ${light.focusRing}`}
+                  className={`mt-10 inline-flex h-14 min-w-[16rem] items-center justify-center rounded-full px-8 text-sm font-medium transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:active:scale-100 focus-visible:outline-none ${light.solidButton} ${light.focusRing}`}
                 >
                   {submitting ? 'Sending inquiry...' : 'Send inquiry'}
                 </button>
@@ -328,35 +333,14 @@ export const ContactPage: React.FC = () => {
 
           <Reveal delay={0.1}>
             <div className="lg:sticky lg:top-32 lg:self-start">
+              {/* The two email rows are gone, so this column is the location
+                  only — a heading promising a direct line would be writing a
+                  cheque the column no longer cashes. The form is the route in. */}
               <h2 className="text-xs font-medium uppercase tracking-[0.18em] text-ink-mute">
-                Direct
+                Where we are
               </h2>
 
               <dl className="mt-8 space-y-8">
-                <div className="border-t border-line pt-6">
-                  <dt className="text-sm text-ink-mute">Leadership</dt>
-                  <dd className="mt-2">
-                    <a
-                      href={`mailto:${COMPANY_INFO.primaryEmail}`}
-                      className="text-lg text-ink underline underline-offset-4 transition-colors hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                    >
-                      {COMPANY_INFO.primaryEmail}
-                    </a>
-                  </dd>
-                </div>
-
-                <div className="border-t border-line pt-6">
-                  <dt className="text-sm text-ink-mute">General inquiries</dt>
-                  <dd className="mt-2">
-                    <a
-                      href={`mailto:${COMPANY_INFO.inquiryEmail}`}
-                      className="text-lg text-ink underline underline-offset-4 transition-colors hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                    >
-                      {COMPANY_INFO.inquiryEmail}
-                    </a>
-                  </dd>
-                </div>
-
                 <div className="border-t border-line pt-6">
                   <dt className="text-sm text-ink-mute">Delivery</dt>
                   <dd className="mt-2 text-lg text-ink">

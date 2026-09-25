@@ -183,8 +183,9 @@ export const ServiceDetailPage: React.FC = () => {
                   className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 />
               </Link>
+              {/* /work is paused — see SiteHeader. */}
               <Link
-                to="/work"
+                to="/success-stories"
                 className={`inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none ${light.ghostButton} ${light.focusRing}`}
               >
                 See where it has shipped

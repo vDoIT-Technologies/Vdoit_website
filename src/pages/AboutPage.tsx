@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Linkedin } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import {
   ADVANTAGES,
   ADVISORY_BOARD,
-  COMPANY_INFO,
   MANAGEMENT_TEAM,
   OFFICES,
   TIMELINE_MILESTONES,
@@ -13,7 +13,7 @@ import {
 import type { TeamMember } from '../types';
 import { Band, BandHeader } from '../components/ui/Band';
 import { EditorialRow } from '../components/ui/EditorialRow';
-import { PageHero } from '../components/layout/PageHero';
+
 import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
 import { TONE } from '../lib/tone';
 
@@ -26,12 +26,6 @@ const light = TONE.light;
 const wash = TONE.wash;
 
 /** The company facts that sit under the story. A label and a value, no cards. */
-const STORY_FACTS = [
-  { label: 'Registered as', value: COMPANY_INFO.name },
-  { label: 'Founded', value: COMPANY_INFO.foundedYear },
-  { label: 'Leadership', value: COMPANY_INFO.foundersExperience },
-  { label: 'Delivery', value: COMPANY_INFO.corporateLocation },
-];
 
 /**
  * One person, on a light band. Shared by the management team and the advisory
@@ -40,15 +34,62 @@ const STORY_FACTS = [
 const PersonCard: React.FC<{ person: TeamMember; tone: Record<string, string> }> = ({
   person,
   tone,
-}) => (
+}) => {
+  const reducedMotion = useReducedMotion();
+
+  return (
   <article className={`flex h-full flex-col border-t ${tone.hairline} pt-8`}>
-    {/* Initials as a typographic mark, not an avatar chip. */}
-    <p
-      aria-hidden="true"
-      className={`text-5xl font-semibold tracking-[-0.04em] ${tone.meta} md:text-6xl`}
-    >
-      {person.initials}
-    </p>
+    {/* The portrait leads the card at a fixed 4:5, so a row stays aligned
+        whether or not someone has a photo. People without one keep the
+        initials mark, set in the same frame rather than as a loose line of
+        type — otherwise a row with one photo in it looks broken. */}
+    <div className="relative">
+      {/* Violet halo. Sits behind the frame and bleeds past it, so the
+          photograph lands on brand colour rather than on bare white. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-3 rounded-[2rem] bg-brand-100/70 blur-2xl"
+      />
+
+      {/* The border is this element's 1px padding: a violet sweep turns
+          underneath, and the inner frame covers all of it but the hairline.
+          One rotation every twelve seconds — at that speed it reads as a lit
+          edge rather than as something asking to be watched. */}
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl p-px">
+        <motion.div
+          aria-hidden="true"
+          className="absolute left-1/2 top-1/2 aspect-square w-[150%] -translate-x-1/2 -translate-y-1/2"
+          style={{
+            backgroundImage:
+              'conic-gradient(from 0deg, var(--color-brand-200) 0deg, var(--color-brand-600) 70deg, var(--color-brand-300) 140deg, var(--color-brand-100) 220deg, var(--color-brand-500) 300deg, var(--color-brand-200) 360deg)',
+          }}
+          animate={reducedMotion ? undefined : { rotate: 360 }}
+          transition={{ duration: 12, ease: 'linear', repeat: Infinity }}
+        />
+
+        <div className="relative h-full w-full overflow-hidden rounded-[23px] bg-brand-50">
+          {person.image ? (
+            <img
+              src={person.image}
+              // Named, not decorative: the face is the point of the card, and
+              // "photo of X" is what a screen reader should get.
+              alt={person.name}
+              width={720}
+              height={900}
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <p
+              aria-hidden="true"
+              className="flex h-full w-full items-center justify-center text-6xl font-semibold tracking-[-0.04em] text-brand-300"
+            >
+              {person.initials}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
 
     <h3 className={`mt-8 text-2xl font-semibold tracking-[-0.02em] ${tone.heading} text-balance`}>
       {person.name}
@@ -88,86 +129,33 @@ const PersonCard: React.FC<{ person: TeamMember; tone: Record<string, string> }>
       </div>
     )}
   </article>
-);
+  );
+};
 
 export const AboutPage: React.FC = () => (
   <>
-    {/* 1 — White page header, as on every page. */}
-    <PageHero
-      eyebrow="About us"
-      title={
-        <>
-          Two founders, ten years,
-          <br />
-          no shelved prototypes.
-        </>
-      }
-    />
-
-    {/* 2 — Light. The story as prose at a reading measure, not a set of boxes.
-        It opens directly under the page title. */}
-    <Band tone="light" size="sm">
-      <RevealGroup stagger={0.08} className="max-w-4xl">
-        <RevealItem>
-          <p className={`text-xs font-medium uppercase tracking-[0.18em] ${light.meta} mb-8`}>
-            Our story
-          </p>
-        </RevealItem>
-
-        <RevealItem>
-          {/* The headline carries the band. Display size, light weight, tight tracking. */}
-          <p
-            className={`text-3xl font-semibold leading-[1.1] tracking-[-0.03em] ${light.heading} text-balance md:text-5xl`}
-          >
-            {COMPANY_INFO.headline}
-          </p>
-        </RevealItem>
-
-        <RevealItem>
-          <p className={`mt-10 max-w-3xl text-lg leading-relaxed ${light.body} md:text-xl`}>
-            Established in 2015 by two people, VDOIT is now a team of 100+
-            engineers that has delivered 200+ projects for 100+ clients across
-            India, the United States, and the UAE — with heavy, sustained
-            investment in R&amp;D behind it.
-          </p>
-        </RevealItem>
-
-        <RevealItem>
-          <p className={`mt-8 max-w-3xl text-lg leading-relaxed ${light.accent}`}>
-            {COMPANY_INFO.tagline}
-          </p>
-        </RevealItem>
-      </RevealGroup>
-
-      {/* One image to break the prose before the footnotes. Decorative, so the
-          alt is empty and it is skipped by screen readers. */}
-      <Reveal delay={0.1}>
-        <img
-          src="/images/abstract-forms.webp"
-          alt=""
-          loading="lazy"
-          width={1200}
-          height={800}
-          className="mt-20 aspect-[3/2] w-full rounded-3xl object-cover"
+    {/* 1 — Light. The team opens the page. No band above it, so its own
+        padding clears the fixed header and its heading is the page's h1. */}
+    <Band tone="light" size="none" className="pb-24 pt-28 md:pb-32 md:pt-32">
+      <Reveal>
+        <BandHeader
+          as="h1"
+          eyebrow="Management team"
+          title="The people who answer for the work."
+          lede="Both founders review delivery directly. There is no layer between the person who scopes your system and the person accountable for it."
         />
       </Reveal>
 
-      {/* Footnotes to the story — hairline-topped columns, one numeral each. */}
-      <RevealGroup stagger={0.06} className="mt-20 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        {STORY_FACTS.map(fact => (
-          <RevealItem key={fact.label}>
-            <div className={`border-t ${light.hairline} pt-6`}>
-              <p className={`text-xs font-medium uppercase tracking-[0.18em] ${light.meta}`}>
-                {fact.label}
-              </p>
-              <p className={`mt-3 text-base leading-relaxed ${light.heading}`}>{fact.value}</p>
-            </div>
-          </RevealItem>
+      <div className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+        {MANAGEMENT_TEAM.map((person, index) => (
+          <Reveal key={person.name} delay={index * 0.08}>
+            <PersonCard person={person} tone={light} />
+          </Reveal>
         ))}
-      </RevealGroup>
+      </div>
     </Band>
 
-    {/* 3 — Ink. Vision and mission, given the one hard-contrast band on the
+    {/* 2 — Ink. Vision and mission, given the one hard-contrast band on the
         page. Two statements, no icons, no cards. */}
     <Band tone="ink" size="lg">
       <div className="grid gap-16 lg:grid-cols-2 lg:gap-20">
@@ -189,26 +177,7 @@ export const AboutPage: React.FC = () => (
       </div>
     </Band>
 
-    {/* 4 — Light. The management team. */}
-    <Band tone="light" size="lg">
-      <Reveal>
-        <BandHeader
-          eyebrow="Management team"
-          title="The people who answer for the work."
-          lede="Both founders review delivery directly. There is no layer between the person who scopes your system and the person accountable for it."
-        />
-      </Reveal>
-
-      <div className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-        {MANAGEMENT_TEAM.map((person, index) => (
-          <Reveal key={person.name} delay={index * 0.08}>
-            <PersonCard person={person} tone={light} />
-          </Reveal>
-        ))}
-      </div>
-    </Band>
-
-    {/* 5 — Wash. The advisory board, or an honest account of why it is not
+    {/* 3 — Wash. The advisory board, or an honest account of why it is not
         listed yet. An empty grid with no explanation reads as a broken page. */}
     <Band tone="wash" size="lg">
       <Reveal>
@@ -258,7 +227,7 @@ export const AboutPage: React.FC = () => (
       )}
     </Band>
 
-    {/* 6 — Light. A decade on a spine: year, marker, entry. */}
+    {/* 4 — Light. A decade on a spine: year, marker, entry. */}
     <Band tone="light" size="lg">
       <Reveal>
         <BandHeader eyebrow="Track record" title="How the last decade actually went." />
@@ -298,7 +267,7 @@ export const AboutPage: React.FC = () => (
       </ol>
     </Band>
 
-    {/* 7 — Wash. Why us, as numbered rows. This used to be a six-card grid. */}
+    {/* 5 — Wash. Why us, as numbered rows. This used to be a six-card grid. */}
     <Band tone="wash" size="lg">
       <Reveal>
         <BandHeader eyebrow="Why VDOIT" title="Six reasons, none of them a logo wall." />
@@ -317,7 +286,7 @@ export const AboutPage: React.FC = () => (
       </div>
     </Band>
 
-    {/* 8 — Light close. Offices, then the two ways to start a conversation. */}
+    {/* 6 — Light close. Offices, then the two ways to start a conversation. */}
     <Band tone="light" size="lg">
       <Reveal>
         <div className="max-w-4xl">

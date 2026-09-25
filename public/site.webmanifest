@@ -8,9 +8,9 @@
   "theme_color": "#5a18f0",
   "icons": [
     {
-      "src": "/images/logo.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "/images/brand/vdoit-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }

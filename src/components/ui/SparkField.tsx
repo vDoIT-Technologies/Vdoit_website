@@ -12,7 +12,8 @@ export const Spark: React.FC<{ className?: string; style?: React.CSSProperties }
 
 /**
  * The hero's backdrop: a lavender wash, two outlined rings echoing the "o" of
- * the wordmark, and a scatter of sparks.
+ * the wordmark, a scatter of sparks, and a run of contour lines filling the
+ * bottom left, where the headline stops and the figure never reaches.
  *
  * Positions are art-directed rather than random, so the composition is the
  * same every load and can be judged like a layout instead of a lottery.
@@ -26,6 +27,14 @@ const SPARKS = [
   { top: '66%', left: '94%', size: 20, opacity: 'text-brand-100' },
 ];
 
+/**
+ * One curve, drawn six times down the corner. Stacking a single path keeps the
+ * lines parallel the way contours are, and the fade carries the eye off the
+ * edge rather than stopping at it.
+ */
+const WAVE_PATH = 'M-20 140 C 60 96 120 196 200 146 S 340 66 500 112';
+const WAVE_ROWS = [0, 26, 52, 78, 104, 130];
+
 export const SparkField: React.FC = () => (
   <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
     {/* Lavender wash, weighted to the top right so the headline stays clean. */}
@@ -35,6 +44,25 @@ export const SparkField: React.FC = () => (
     {/* Rings echoing the counter of the "o". */}
     <div className="absolute -right-24 top-24 h-[380px] w-[380px] rounded-full border border-brand-200/60 md:h-[520px] md:w-[520px]" />
     <div className="absolute right-24 top-56 hidden h-[260px] w-[260px] rounded-full border border-brand-200/40 lg:block" />
+
+    {/* Contour lines, bottom left. Bleeds past both edges so it reads as a
+        crop of something larger rather than a motif dropped in a corner. */}
+    <svg
+      viewBox="0 0 480 300"
+      fill="none"
+      className="absolute -left-20 bottom-0 hidden h-[300px] w-[480px] text-brand-200 lg:block"
+    >
+      {WAVE_ROWS.map((row, index) => (
+        <path
+          key={row}
+          d={WAVE_PATH}
+          transform={`translate(0 ${row})`}
+          stroke="currentColor"
+          strokeWidth="1.5"
+          opacity={0.6 - index * 0.08}
+        />
+      ))}
+    </svg>
 
     {SPARKS.map(spark => (
       <Spark

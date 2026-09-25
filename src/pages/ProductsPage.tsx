@@ -12,12 +12,12 @@ export const ProductsPage: React.FC = () => (
   <>
     {/* 1 — White hero. */}
     <PageHero
-      eyebrow="Products"
+      eyebrow="Success stories"
       title={
         <>
-          Eleven products
+          Products we built
           <br />
-          we built and shipped.
+          and took to market.
         </>
       }
     />

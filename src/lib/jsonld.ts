@@ -1,5 +1,4 @@
 import {
-  ALL_ENGAGEMENTS,
   COMPANY_INFO,
   FAQS,
   CREDENTIALS,
@@ -50,7 +49,7 @@ const organization = () => ({
   url: `${SITE_URL}/`,
   logo: {
     '@type': 'ImageObject',
-    url: `${SITE_URL}/images/logo.svg`,
+    url: `${SITE_URL}/images/brand/vdoit-icon.png`,
     caption: COMPANY_INFO.name,
   },
   image: OG_IMAGE,
@@ -64,6 +63,9 @@ const organization = () => ({
     '@type': 'Person',
     name: person.name,
     jobTitle: person.role,
+    // Their own profiles, so the founder nodes resolve to real entities
+    // rather than to two bare names.
+    sameAs: [person.linkedinUrl],
   })),
   address: addressNodes(),
   hasCredential: CREDENTIALS.map(c => credentialNode(c.label, c.detail)),
@@ -146,22 +148,24 @@ const serviceNodes = () =>
     areaServed: OFFICES.map(o => o.country),
   }));
 
-const caseStudyNodes = () =>
-  ALL_ENGAGEMENTS.map((study, index) => ({
-    '@type': 'ListItem',
-    position: index + 1,
-    url: `${SITE_URL}/work/${study.id}`,
-    item: {
-      '@type': 'Article',
-      '@id': `${SITE_URL}/work/${study.id}#article`,
-      headline: `${study.client} — ${study.project}`,
-      description: study.summary,
-      articleSection: study.sector,
-      url: `${SITE_URL}/work/${study.id}`,
-      image: `${SITE_URL}${study.image}`,
-      author: { '@id': ORG_ID },
-    },
-  }));
+// Paused with the /work routes. Restore this and the `ALL_ENGAGEMENTS` import
+// when the case studies come back.
+// const caseStudyNodes = () =>
+//   ALL_ENGAGEMENTS.map((study, index) => ({
+//     '@type': 'ListItem',
+//     position: index + 1,
+//     url: `${SITE_URL}/work/${study.id}`,
+//     item: {
+//       '@type': 'Article',
+//       '@id': `${SITE_URL}/work/${study.id}#article`,
+//       headline: `${study.client} — ${study.project}`,
+//       description: study.summary,
+//       articleSection: study.sector,
+//       url: `${SITE_URL}/work/${study.id}`,
+//       image: `${SITE_URL}${study.image}`,
+//       author: { '@id': ORG_ID },
+//     },
+//   }));
 
 const productNodes = () =>
   PRODUCTS.map((product, index) => ({
@@ -169,7 +173,7 @@ const productNodes = () =>
     position: index + 1,
     item: {
       '@type': 'SoftwareApplication',
-      '@id': `${SITE_URL}/products#${product.id}`,
+      '@id': `${SITE_URL}/success-stories#${product.id}`,
       name: product.name,
       description: product.description,
       applicationCategory: product.category,
@@ -228,8 +232,8 @@ const generalFaqs = () => FAQS.filter(faq => !faq.serviceId);
 
 const PAGE_LABELS: Record<string, string> = {
   '/services': 'Services',
-  '/products': 'Products',
-  '/work': 'Success Stories',
+  '/success-stories': 'Success Stories',
+  // '/work': 'Success Stories',
   '/about': 'About Us',
   '/updates': 'Updates',
   '/jobs': 'IT Jobs',
@@ -287,35 +291,36 @@ export const jsonLdFor = (path: string, buildDate: string): object | null => {
     return { '@context': 'https://schema.org', '@graph': graph };
   }
 
-  const study = ALL_ENGAGEMENTS.find(item => path === `/work/${item.id}`);
-  if (study) {
-    graph.push(
-      breadcrumbs([
-        { name: 'Success Stories', path: '/work' },
-        { name: `${study.client} — ${study.project}`, path },
-      ]),
-      {
-        '@type': 'Article',
-        '@id': `${canonicalFor(path)}#article`,
-        headline: `${study.client} — ${study.project}`,
-        description: study.summary,
-        articleSection: study.sector,
-        url: canonicalFor(path),
-        image: `${SITE_URL}${study.image}`,
-        author: { '@id': ORG_ID },
-        publisher: { '@id': ORG_ID },
-        dateModified: buildDate,
-        about: {
-          '@type': 'Organization',
-          name: study.client,
-        },
-        // The outcomes are the substance of the page; without them the schema
-        // describes the engagement without saying what was delivered.
-        articleBody: [study.summary, ...study.outcomes].join(' '),
-      }
-    );
-    return { '@context': 'https://schema.org', '@graph': graph };
-  }
+  // Paused with /work/:slug.
+  // const study = ALL_ENGAGEMENTS.find(item => path === `/work/${item.id}`);
+  // if (study) {
+  //   graph.push(
+  //     breadcrumbs([
+  //       { name: 'Success Stories', path: '/work' },
+  //       { name: `${study.client} — ${study.project}`, path },
+  //     ]),
+  //     {
+  //       '@type': 'Article',
+  //       '@id': `${canonicalFor(path)}#article`,
+  //       headline: `${study.client} — ${study.project}`,
+  //       description: study.summary,
+  //       articleSection: study.sector,
+  //       url: canonicalFor(path),
+  //       image: `${SITE_URL}${study.image}`,
+  //       author: { '@id': ORG_ID },
+  //       publisher: { '@id': ORG_ID },
+  //       dateModified: buildDate,
+  //       about: {
+  //         '@type': 'Organization',
+  //         name: study.client,
+  //       },
+  //       // The outcomes are the substance of the page; without them the schema
+  //       // describes the engagement without saying what was delivered.
+  //       articleBody: [study.summary, ...study.outcomes].join(' '),
+  //     }
+  //   );
+  //   return { '@context': 'https://schema.org', '@graph': graph };
+  // }
 
   const label = PAGE_LABELS[path];
   if (label) graph.push(breadcrumbs([{ name: label, path }]));
@@ -324,15 +329,16 @@ export const jsonLdFor = (path: string, buildDate: string): object | null => {
     graph.push(...serviceNodes(), faqNode(generalFaqs(), path));
   }
 
-  if (path === '/work') {
-    graph.push({
-      '@type': 'ItemList',
-      name: 'Selected engagements',
-      itemListElement: caseStudyNodes(),
-    });
-  }
+  // Paused with the /work route.
+  // if (path === '/work') {
+  //   graph.push({
+  //     '@type': 'ItemList',
+  //     name: 'Selected engagements',
+  //     itemListElement: caseStudyNodes(),
+  //   });
+  // }
 
-  if (path === '/products') {
+  if (path === '/success-stories') {
     graph.push({
       '@type': 'ItemList',
       name: 'Products built by VDOIT',

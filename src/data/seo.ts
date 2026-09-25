@@ -1,4 +1,4 @@
-import { ALL_ENGAGEMENTS, COMPANY_INFO, SERVICES } from './companyData';
+import { COMPANY_INFO, SERVICES } from './companyData';
 
 /** Canonical origin, no trailing slash. Single source for every absolute URL. */
 export const SITE_URL = COMPANY_INFO.siteUrl;
@@ -38,20 +38,21 @@ export const PAGE_SEO: Record<string, PageSeo> = {
     description:
       'Generative AI, autonomous agents, computer vision, predictive ML, cloud modernization and custom software engineering — six practices, one delivery team.',
   },
-  '/products': {
+  '/success-stories': {
     title: 'AI & Web3 Products We Have Shipped | VDOIT',
     description:
       'Eleven products VDOIT designed, built and took to market across AI, Web3 and platform engineering — from digital twins to health and fintech platforms.',
   },
-  '/work': {
-    title: 'Case Studies — Defence, Government & Enterprise AI | VDOIT',
-    description:
-      'AI and analytics delivered for the Ministry of Defence, NACO, NSDC, NCERT, C-DAC and the governments of Maharashtra, Odisha and Tamil Nadu.',
-  },
+  // Paused with the /work route.
+  // '/work': {
+  //   title: 'Case Studies — Defence, Government & Enterprise AI | VDOIT',
+  //   description:
+  //     'AI and analytics delivered for the Ministry of Defence, NACO, NSDC, NCERT, C-DAC and the governments of Maharashtra, Odisha and Tamil Nadu.',
+  // },
   '/about': {
     title: 'About VDOIT — Enterprise AI Company Since 2015',
     description:
-      'Founded in 2015 and grown from two people to 100+ engineers across Gurugram, Las Vegas and Dubai. ISO 9001 and ISO 27001 certified, MSME registered.',
+      'Founded in 2015 and grown from two people to 100+ engineers, headquartered in Gurugram. ISO 9001 and ISO 27001 certified, MSME registered.',
   },
   '/updates': {
     title: 'Insights on Enterprise AI & Delivery | VDOIT',
@@ -66,7 +67,7 @@ export const PAGE_SEO: Record<string, PageSeo> = {
   '/contact': {
     title: 'Contact VDOIT — Start an AI Project',
     description:
-      'Tell us the constraint and we will tell you what it actually is — including when the answer is that you do not need AI for it. Offices in India, the US and the UAE.',
+      'Tell us the constraint and we will tell you what it actually is — including when the answer is that you do not need AI for it. Based in Gurugram, India.',
   },
   '/404': {
     title: 'Page not found | VDOIT',
@@ -99,16 +100,18 @@ const dynamicSeo = (path: string): PageSeo | null => {
     };
   }
 
-  const study = ALL_ENGAGEMENTS.find(item => path === `/work/${item.id}`);
-  if (study) {
-    return {
-      // Clamp the descriptive half only, so the suffix is never what gets cut.
-      title: `${clamp(`${study.client} — ${study.project}`, 52)} | VDOIT`,
-      description: clamp(`${study.summary} ${study.metric} ${study.metricLabel}.`),
-      image: `${SITE_URL}${study.image}`,
-      type: 'article',
-    };
-  }
+  // Paused with /work/:slug. Restore this and the `ALL_ENGAGEMENTS` import
+  // when the case studies come back.
+  // const study = ALL_ENGAGEMENTS.find(item => path === `/work/${item.id}`);
+  // if (study) {
+  //   return {
+  //     // Clamp the descriptive half only, so the suffix is never what gets cut.
+  //     title: `${clamp(`${study.client} — ${study.project}`, 52)} | VDOIT`,
+  //     description: clamp(`${study.summary} ${study.metric} ${study.metricLabel}.`),
+  //     image: `${SITE_URL}${study.image}`,
+  //     type: 'article',
+  //   };
+  // }
 
   return null;
 };

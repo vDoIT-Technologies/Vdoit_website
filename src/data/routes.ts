@@ -17,13 +17,15 @@ export interface SiteRoute {
   noindex?: boolean;
 }
 
-import { ALL_ENGAGEMENTS, SERVICES } from './companyData';
+import { SERVICES } from './companyData';
 
 const STATIC_ROUTES: SiteRoute[] = [
   { path: '/', changefreq: 'weekly', priority: 1.0 },
   { path: '/services', changefreq: 'weekly', priority: 0.9 },
-  { path: '/work', changefreq: 'weekly', priority: 0.9 },
-  { path: '/products', changefreq: 'monthly', priority: 0.8 },
+  { path: '/success-stories', changefreq: 'monthly', priority: 0.8 },
+  // Paused with the /work route in `src/routes.tsx`. An unrouted path here
+  // would prerender to a 404 body and still be advertised in the sitemap.
+  // { path: '/work', changefreq: 'weekly', priority: 0.9 },
   { path: '/about', changefreq: 'monthly', priority: 0.7 },
   { path: '/updates', changefreq: 'weekly', priority: 0.7 },
   { path: '/jobs', changefreq: 'weekly', priority: 0.6 },
@@ -45,16 +47,18 @@ const SERVICE_ROUTES: SiteRoute[] = SERVICES.map(service => ({
   priority: 0.8,
 }));
 
-const ENGAGEMENT_ROUTES: SiteRoute[] = ALL_ENGAGEMENTS.map(study => ({
-  path: `/work/${study.id}`,
-  changefreq: 'monthly',
-  priority: 0.7,
-}));
+// Paused with /work/:slug. Restore this and its spread below, along with the
+// `ALL_ENGAGEMENTS` import, when the case studies come back.
+// const ENGAGEMENT_ROUTES: SiteRoute[] = ALL_ENGAGEMENTS.map(study => ({
+//   path: `/work/${study.id}`,
+//   changefreq: 'monthly',
+//   priority: 0.7,
+// }));
 
 export const ALL_ROUTES: SiteRoute[] = [
   ...STATIC_ROUTES,
   ...SERVICE_ROUTES,
-  ...ENGAGEMENT_ROUTES,
+  // ...ENGAGEMENT_ROUTES,
 ];
 
 /** Routes that belong in the sitemap and in `llms.txt`. */

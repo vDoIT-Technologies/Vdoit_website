@@ -29,6 +29,16 @@
 }
 
 @layer base {
+  /*
+   * The header is fixed, so anything the browser scrolls to — an anchor, or a
+   * control the keyboard just tabbed to — lands underneath it. Padding the
+   * scroll port by more than the header's height keeps focus visible, which is
+   * WCAG 2.2's Focus Not Obscured.
+   */
+  html {
+    scroll-padding-top: 6.5rem;
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }

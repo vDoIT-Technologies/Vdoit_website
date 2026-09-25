@@ -196,8 +196,10 @@ export const ServicesPage: React.FC = () => (
                 className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
             </Link>
+            {/* /work is paused, so this points at the page the nav now calls
+                Success Stories. */}
             <Link
-              to="/work"
+              to="/success-stories"
               className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               See the work

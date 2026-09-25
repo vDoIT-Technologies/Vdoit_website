@@ -134,8 +134,8 @@ const llms = (siteUrl: string, mod: any, lastmod: string) => {
     '',
     `- [Home](${siteUrl}/): overview and current focus`,
     `- [Services](${siteUrl}/services): the six delivery practices`,
-    `- [Success Stories](${siteUrl}/work): case studies with outcomes`,
-    `- [Products](${siteUrl}/products): products taken to market`,
+    // The /work page is paused; /success-stories carries that label.
+    `- [Success Stories](${siteUrl}/success-stories): products taken to market`,
     `- [About](${siteUrl}/about): founders, team, timeline, offices`,
     `- [Updates](${siteUrl}/updates): writing and company news`,
     `- [IT Jobs](${siteUrl}/jobs): open roles`,

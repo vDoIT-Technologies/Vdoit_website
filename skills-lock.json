@@ -6,6 +6,12 @@
       "sourceType": "github",
       "skillPath": "skills/3d-web-experience/SKILL.md",
       "computedHash": "ece6cc650690490b73b5fbe5870a0f9a83db1143720b0a7567d7c34a33a88787"
+    },
+    "image-generation": {
+      "source": "guinacio/claude-image-gen",
+      "sourceType": "github",
+      "skillPath": "skills/image-generation/SKILL.md",
+      "computedHash": "b48bcd878de2513626f02a698af3bd003c36bcca8dbb4c04e9c78bb61a66e5d0"
     }
   }
 }

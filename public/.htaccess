@@ -19,6 +19,10 @@ DirectoryIndex index.html
   RewriteCond %{HTTP_HOST} !^www\.vdoitech\.com$ [NC]
   RewriteRule ^ https://www.vdoitech.com%{REQUEST_URI} [R=301,L]
 
+  # 1b. /products was renamed to /success-stories. Permanent, so old links
+  #     and anything already indexed still land.
+  RewriteRule ^products/?$ /success-stories [R=301,L]
+
   # 2. No trailing slashes, to match the canonical tags the build emits.
   #    The leading `.+` means the bare root is left alone.
   RewriteCond %{REQUEST_URI} ^(.+)/$

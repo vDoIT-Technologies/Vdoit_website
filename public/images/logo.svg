@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="VDOIT">
-  <title>VDO IT Technologies Limited</title>
-  <rect width="512" height="512" fill="#ffffff"/>
-  <g transform="translate(256 256) scale(3.6) translate(-50 -50)">
-    <circle cx="50" cy="50" r="38" fill="none" stroke="#5a18f0" stroke-width="19"/>
-    <path d="M50 24c1.6 13.2 12.2 23.8 25.4 25.4C62.2 51 51.6 61.6 50 74.8 48.4 61.6 37.8 51 24.6 49.4 37.8 47.8 48.4 37.2 50 24Z" fill="#5a18f0"/>
-  </g>
-</svg>

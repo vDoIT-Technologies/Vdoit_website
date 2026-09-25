@@ -7,8 +7,7 @@ import { Wordmark } from '../ui/Wordmark';
 
 export const NAV_ITEMS = [
   { label: 'Services', to: '/services' },
-  { label: 'Products', to: '/products' },
-  { label: 'Success Stories', to: '/work' },
+  { label: 'Success Stories', to: '/success-stories' },
   { label: 'About Us', to: '/about' },
   { label: 'Updates', to: '/updates' },
   { label: 'IT Jobs', to: '/jobs' },
@@ -112,7 +111,7 @@ export const SiteHeader: React.FC = () => {
           aria-label="vdoit — home"
           className="group rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
         >
-          <Wordmark className="text-[26px] [&>svg]:transition-transform [&>svg]:duration-700 [&>svg]:ease-out group-hover:[&>svg]:rotate-[135deg]" />
+          <Wordmark className="text-[26px]" />
         </Link>
 
         {/* Grouped in a pill: loose links in the middle of a wide bar read as
@@ -173,7 +172,7 @@ export const SiteHeader: React.FC = () => {
             to="/contact"
             className={`group inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-brand-600 px-4 py-3 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-[0.98] focus-visible:outline-none sm:px-5 ${TONE.light.focusRing}`}
           >
-            Let's talk
+            Get in Touch
             <ArrowUpRight
               aria-hidden="true"
               className="hidden h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:block"

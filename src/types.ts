@@ -134,6 +134,12 @@ export interface TeamMember {
   name: string;
   role: string;
   initials: string;
+  /**
+   * Portrait, 4:5, served from `public/images/team`. Optional: people without
+   * one fall back to the initials mark in the same frame, so a row of cards
+   * stays aligned either way.
+   */
+  image?: string;
   bio: string;
   focusAreas?: string[];
   linkedinUrl?: string;
@@ -154,4 +160,19 @@ export interface FaqItem {
    * questions, which appear on /services and /contact.
    */
   serviceId?: string;
+}
+
+/**
+ * One node on the hero's AI capability ring. Deliberately lighter than
+ * `IndustryItem`: this is the domain map on the figure, not the industries
+ * band, and it carries no outcome stat or long-form description.
+ */
+export interface AiApplication {
+  id: string;
+  /** Full name, used as the card heading. */
+  name: string;
+  /** Short form for the ring label, where space is tight. */
+  label: string;
+  iconName: string;
+  useCases: string[];
 }

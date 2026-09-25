@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowUpRight, Linkedin } from 'lucide-react';
-import { COMPANY_INFO, OFFICES } from '../../data/companyData';
-import { Band } from '../ui/Band';
-import { Wordmark } from '../ui/Wordmark';
-import { Spark } from '../ui/SparkField';
-import { TONE } from '../../lib/tone';
+import React from "react";
+import { Link } from "react-router-dom";
+import { ArrowUpRight, Linkedin } from "lucide-react";
+import { COMPANY_INFO, OFFICES } from "../../data/companyData";
+import { Band } from "../ui/Band";
+import { Wordmark } from "../ui/Wordmark";
+import { Spark } from "../ui/SparkField";
+import { TONE } from "../../lib/tone";
 
 const wash = TONE.wash;
 
@@ -17,25 +17,27 @@ const linkClasses = `text-ink-soft transition-colors hover:text-brand-600 rounde
  * with the real section headings above them. Each column is a `<nav>` with an
  * `aria-label`, so the grouping is still announced.
  */
-const headingClasses = 'text-xs font-medium uppercase tracking-[0.18em] text-ink-mute mb-4';
+const headingClasses =
+  "text-xs font-medium uppercase tracking-[0.18em] text-ink-mute mb-4";
 
 const COLUMNS = [
   {
-    heading: 'Explore',
+    heading: "Explore",
     links: [
-      { label: 'Home', to: '/' },
-      { label: 'Services', to: '/services' },
-      { label: 'Products', to: '/products' },
-      { label: 'Success Stories', to: '/work' },
+      { label: "Home", to: "/" },
+      { label: "Services", to: "/services" },
+      { label: "Success Stories", to: "/success-stories" },
+      // Paused with the /work route — see SiteHeader.
+      // { label: 'Success Stories', to: '/work' },
     ],
   },
   {
-    heading: 'Company',
+    heading: "Company",
     links: [
-      { label: 'About Us', to: '/about' },
-      { label: 'Updates', to: '/updates' },
-      { label: 'IT Jobs', to: '/jobs' },
-      { label: 'Contact', to: '/contact' },
+      { label: "About Us", to: "/about" },
+      { label: "Updates", to: "/updates" },
+      { label: "IT Jobs", to: "/jobs" },
+      { label: "Contact", to: "/contact" },
     ],
   },
 ];
@@ -48,10 +50,12 @@ export const SiteFooter: React.FC = () => (
       className="pointer-events-none absolute inset-0 opacity-60"
       style={{
         backgroundImage:
-          'linear-gradient(to right, #ebe3ff 1px, transparent 1px), linear-gradient(to bottom, #ebe3ff 1px, transparent 1px)',
-        backgroundSize: '132px 132px',
-        maskImage: 'linear-gradient(to bottom, black 0%, black 55%, transparent 100%)',
-        WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 55%, transparent 100%)',
+          "linear-gradient(to right, #ebe3ff 1px, transparent 1px), linear-gradient(to bottom, #ebe3ff 1px, transparent 1px)",
+        backgroundSize: "132px 132px",
+        maskImage:
+          "linear-gradient(to bottom, black 0%, black 55%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to bottom, black 0%, black 55%, transparent 100%)",
       }}
     />
 
@@ -109,11 +113,11 @@ export const SiteFooter: React.FC = () => (
           </a>
         </div>
 
-        {COLUMNS.map(column => (
+        {COLUMNS.map((column) => (
           <nav key={column.heading} aria-label={column.heading}>
             <p className={headingClasses}>{column.heading}</p>
             <ul className="space-y-3 text-base">
-              {column.links.map(link => (
+              {column.links.map((link) => (
                 <li key={link.to}>
                   <Link to={link.to} className={linkClasses}>
                     {link.label}
@@ -129,13 +133,13 @@ export const SiteFooter: React.FC = () => (
           <ul className="space-y-3 text-base">
             <li>
               <a
-                href={`tel:${COMPANY_INFO.phone.replace(/[^+\d]/g, '')}`}
+                href={`tel:${COMPANY_INFO.phone.replace(/[^+\d]/g, "")}`}
                 className={linkClasses}
               >
                 {COMPANY_INFO.phone}
               </a>
             </li>
-            {OFFICES.map(office => (
+            {OFFICES.map((office) => (
               <li key={office.country} className="text-ink-soft">
                 {office.country} &mdash; {office.city}
               </li>
@@ -146,9 +150,10 @@ export const SiteFooter: React.FC = () => (
 
       <div className="mt-12 flex flex-col gap-3 border-t border-brand-200/70 pt-5 text-xs text-ink-mute sm:flex-row sm:items-center sm:justify-between">
         <p>
-          &copy; {COMPANY_INFO.foundedYear}&ndash;2026 {COMPANY_INFO.name}. All rights reserved.
+          &copy; {COMPANY_INFO.foundedYear}&ndash;2026 {COMPANY_INFO.name}. All
+          rights reserved.
         </p>
-        <p>Founded by Narendra Kumar Kamra &amp; Neetu Gupta</p>
+        <p>Founded by Narinder Kumar Kamra &amp; Neetu Gupta</p>
       </div>
     </div>
   </Band>
