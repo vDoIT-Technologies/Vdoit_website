@@ -95,13 +95,17 @@ export const PinnedScroller: React.FC<PinnedScrollerProps> = props => {
   }, []);
 
   if (!enabled || reducedMotion) {
+    // The band around this is `size="none"`, because the pinned track owns its
+    // own height. This fallback has to own its height too — without the
+    // padding the heading butted straight against the grid above it on every
+    // phone.
     return (
-      <>
+      <div className="py-24 md:py-32">
         {props.heading && <div className={CONTAINER}>{props.heading}</div>}
         <HorizontalScroller label={props.label} className="mt-14">
           {props.children}
         </HorizontalScroller>
-      </>
+      </div>
     );
   }
 

@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { motion, useReducedMotion, useScroll } from 'motion/react';
-import { CONTAINER } from '../../lib/tone';
+import { CONTAINER, TONE } from '../../lib/tone';
 import { Wordmark } from '../ui/Wordmark';
 
 export const NAV_ITEMS = [
   { label: 'Services', to: '/services' },
-  { label: 'Products', to: '/products' },
-  { label: 'Success Stories', to: '/work' },
+  { label: 'Success Stories', to: '/success-stories' },
   { label: 'About Us', to: '/about' },
   { label: 'Updates', to: '/updates' },
   { label: 'IT Jobs', to: '/jobs' },
@@ -22,6 +21,8 @@ export const SiteHeader: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
   const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
@@ -54,13 +55,46 @@ export const SiteHeader: React.FC = () => {
     };
   }, [menuOpen]);
 
+  /**
+   * Escape closes, and Tab stays inside.
+   *
+   * The drawer covers the page but the page behind it was still in the tab
+   * order, so tabbing past the last link walked invisibly through the whole
+   * document. It is a modal, so it traps focus, takes focus on open, and hands
+   * focus back to the toggle on close.
+   */
   useEffect(() => {
     if (!menuOpen) return;
+
+    const drawer = drawerRef.current;
+    drawer?.querySelector<HTMLElement>('a, button')?.focus();
+
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMenuOpen(false);
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        return;
+      }
+      if (event.key !== 'Tab' || !drawer) return;
+
+      const focusable = drawer.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      toggleRef.current?.focus();
+    };
   }, [menuOpen]);
 
   return (
@@ -75,9 +109,9 @@ export const SiteHeader: React.FC = () => {
         <Link
           to="/"
           aria-label="vdoit — home"
-          className="group rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+          className="group rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
         >
-          <Wordmark className="text-[26px] [&>svg]:transition-transform [&>svg]:duration-700 [&>svg]:ease-out group-hover:[&>svg]:rotate-[135deg]" />
+          <Wordmark className="text-[26px]" />
         </Link>
 
         {/* Grouped in a pill: loose links in the middle of a wide bar read as
@@ -96,7 +130,7 @@ export const SiteHeader: React.FC = () => {
                 key={item.to}
                 to={item.to}
                 onMouseEnter={() => setHovered(item.to)}
-                className={`relative whitespace-nowrap rounded-full px-3.5 py-2 text-sm transition-colors xl:px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 ${
+                className={`relative whitespace-nowrap rounded-full px-3.5 py-2 text-sm transition-colors xl:px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                   lit ? 'text-white' : 'text-ink-soft hover:text-ink'
                 }`}
               >
@@ -114,6 +148,15 @@ export const SiteHeader: React.FC = () => {
                     }
                   />
                 )}
+                {/* The pill follows the pointer, so hovering any item used to
+                    erase every trace of which page you were actually on. This
+                    quieter rule stays put underneath. */}
+                {item.to === activeItem && !lit && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-3.5 bottom-1 h-0.5 rounded-full bg-brand-300 xl:inset-x-4"
+                  />
+                )}
                 <span className="relative">{item.label}</span>
               </NavLink>
             );
@@ -121,25 +164,35 @@ export const SiteHeader: React.FC = () => {
         </nav>
 
         <div className="flex items-center gap-2.5">
+          {/* Visible at every width. It used to be `hidden sm:inline-flex`, so
+              on a phone the only route to contact was the drawer, where it sat
+              seventh. The arrow is what gives way on narrow screens, not the
+              CTA. `py-3` keeps the target at 44px. */}
           <Link
             to="/contact"
-            className="group hidden sm:inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2"
+            className={`group inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-brand-600 px-4 py-3 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-[0.98] focus-visible:outline-none sm:px-5 ${TONE.light.focusRing}`}
           >
-            Let's talk
+            Get in Touch
             <ArrowUpRight
               aria-hidden="true"
-              className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              className="hidden h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:block"
             />
           </Link>
 
           <button
             type="button"
+            ref={toggleRef}
             onClick={() => setMenuOpen(open => !open)}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 lg:hidden"
+            aria-controls="site-menu"
+            className={`inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-all hover:border-brand-300 active:scale-[0.97] focus-visible:outline-none lg:hidden ${TONE.light.focusRing}`}
           >
-            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {menuOpen ? (
+              <X aria-hidden="true" className="h-5 w-5" />
+            ) : (
+              <Menu aria-hidden="true" className="h-5 w-5" />
+            )}
           </button>
         </div>
       </div>
@@ -155,16 +208,23 @@ export const SiteHeader: React.FC = () => {
       )}
 
       {menuOpen && (
-        <div className="fixed inset-0 top-0 z-40 overflow-y-auto bg-white pb-16 pt-24 lg:hidden">
+        <div
+          ref={drawerRef}
+          id="site-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site menu"
+          className="fixed inset-0 top-0 z-40 overflow-y-auto bg-white pb-16 pt-24 lg:hidden"
+        >
           <nav className={`${CONTAINER} flex flex-col`} aria-label="Mobile">
             {[...NAV_ITEMS, { label: 'Contact', to: '/contact' }].map((item, index) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `flex items-baseline gap-5 border-t border-line py-6 text-3xl font-semibold tracking-[-0.03em] transition-colors ${
-                    isActive ? 'text-brand-600' : 'text-ink'
-                  }`
+                  `flex items-baseline gap-5 border-t border-line py-6 text-3xl font-semibold tracking-[-0.03em] transition-colors focus-visible:outline-none ${
+                    TONE.light.focusRing
+                  } ${isActive ? 'text-brand-600' : 'text-ink'}`
                 }
               >
                 <span className="font-mono text-xs tabular-nums text-ink-mute">

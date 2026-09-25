@@ -15,60 +15,86 @@ import { PostThread } from '../components/ui/PostThread';
 import { LogoMarquee } from '../components/ui/LogoMarquee';
 import { PinnedSplit } from '../components/ui/PinnedSplit';
 import { SparkField, Spark } from '../components/ui/SparkField';
+import { HeroConstellation } from '../components/ui/HeroConstellation';
 import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
 import { CONTAINER } from '../lib/tone';
 
 export const HomePage: React.FC = () => (
   <>
-    {/* 1 — White hero. The spark field carries the right-hand side. */}
-    <Band tone="light" size="hero" className="overflow-hidden">
+    {/* 1 — White hero. The spark field washes the ground; from `xl` up the
+        headline and the constellation share the frame, tuned to land inside
+        one screen rather than making the figure a scroll away. */}
+    <Band tone="light" size="hero" className="overflow-hidden xl:pb-16 xl:pt-32">
       <SparkField />
 
-      <RevealGroup trigger="mount" stagger={0.08} className="relative z-10 max-w-4xl">
-        <RevealItem>
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">
-            <Spark className="h-3 w-3" />
-            Enterprise AI since {COMPANY_INFO.foundedYear}
-          </span>
-        </RevealItem>
+      <div className="relative z-10 grid items-center gap-12 xl:grid-cols-[5fr_7fr] xl:gap-5">
+        {/* Home only: the headline pulls out of the shared container gutter and
+            sits above centre, so it reads as the page's opening rather than as
+            a caption balanced against the ring. The pull scales with the
+            gutter — a flat one would leave the text 16px off the edge at
+            1280, hugging the frame and sitting left of the logo. */}
+        <RevealGroup
+          trigger="mount"
+          stagger={0.08}
+          className="max-w-4xl xl:-ml-6 xl:-mt-28 xl:max-w-none 2xl:-ml-12"
+        >
+          <RevealItem>
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">
+              <Spark className="h-3 w-3" />
+              Enterprise AI since {COMPANY_INFO.foundedYear}
+            </span>
+          </RevealItem>
 
-        <RevealItem>
-          <h1 className="mt-8 text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.045em] text-ink sm:text-7xl md:text-8xl">
-            AI systems that
-            <br />
-            <span className="text-brand-600">earn their keep.</span>
-          </h1>
-        </RevealItem>
+          <RevealItem>
+            <h1 className="mt-8 text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.045em] text-ink sm:text-7xl md:text-8xl xl:text-[3.5rem] 2xl:text-6xl">
+              AI systems that
+              <br />
+              <span className="text-brand-600">earn their keep.</span>
+            </h1>
+          </RevealItem>
 
-        <RevealItem>
-          <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink-soft md:text-xl">
-            We build production-grade AI for enterprises that need results, not
-            demos. A decade of delivery, and not a single proof-of-concept left
-            on a shelf.
-          </p>
-        </RevealItem>
+          <RevealItem>
+            <p className="mt-6 max-w-xl xl:text-base text-lg leading-relaxed text-ink-soft md:text-xl">
+              We build production-grade AI for enterprises that need results, not
+              demos. A decade of delivery, and not a single proof-of-concept left
+              on a shelf.
+            </p>
+          </RevealItem>
 
-        <RevealItem>
-          <div className="mt-11 flex flex-wrap items-center gap-3">
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-2 rounded-full bg-brand-600 px-7 py-3.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2"
-            >
-              Start a project
-              <ArrowUpRight
-                aria-hidden="true"
-                className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </Link>
-            <Link
-              to="/services"
-              className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
-            >
-              What we do
-            </Link>
-          </div>
-        </RevealItem>
-      </RevealGroup>
+          <RevealItem>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link
+                to="/contact"
+                className="group inline-flex items-center gap-2 rounded-full bg-brand-600 px-7 py-3.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2"
+              >
+                Start a project
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
+              <Link
+                to="/services"
+                className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
+                What we do
+              </Link>
+            </div>
+          </RevealItem>
+        </RevealGroup>
+
+        {/* An enhancement rather than the only route to the content — the same
+            industries run in full further down the page. It appears at `xl`,
+            the first width where the ring and its labels can sit beside the
+            headline instead of under it.
+
+            The width caps hold the figure back from the container edge so the
+            right-hand nodes' cards land on screen instead of under the band's
+            clip. How much room that takes shrinks as the viewport grows — a
+            single cap sized for 1280 would leave a dead gap beside the card on
+            a wide screen — so it steps out and is gone by 1536. */}
+        <HeroConstellation className="hidden xl:-mt-12 xl:block xl:max-w-[79%] min-[1440px]:max-w-[88%] 2xl:max-w-none" />
+      </div>
     </Band>
 
     {/* 1b — Light. Proof before the pitch. The marks are dark artwork on
@@ -115,7 +141,7 @@ export const HomePage: React.FC = () => (
           />
           <Link
             to="/services"
-            className="group inline-flex shrink-0 items-center gap-2 rounded pb-2 text-sm font-medium text-brand-600 transition-colors hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+            className="group inline-flex shrink-0 items-center gap-2 rounded pb-2 text-sm font-medium text-brand-600 transition-colors hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
           >
             View all services
             <ArrowUpRight

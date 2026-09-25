@@ -1,0 +1,16 @@
+{
+  "name": "VDO IT Technologies Limited",
+  "short_name": "VDOIT",
+  "description": "Enterprise AI, products and digital platforms.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#5a18f0",
+  "icons": [
+    {
+      "src": "/images/brand/vdoit-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

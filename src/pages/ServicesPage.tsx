@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { INDUSTRIES, SERVICES } from '../data/companyData';
+import { FAQS, INDUSTRIES, SERVICES } from '../data/companyData';
 import { Band, BandHeader } from '../components/ui/Band';
 import { Disclosure } from '../components/ui/Disclosure';
+import { FaqList } from '../components/ui/FaqList';
 import { HorizontalScroller, ScrollItem } from '../components/ui/HorizontalScroller';
 import { PageHero } from '../components/layout/PageHero';
 import { Reveal } from '../components/ui/Reveal';
-import { CONTAINER } from '../lib/tone';
+import { CONTAINER, TONE } from '../lib/tone';
 
 export const ServicesPage: React.FC = () => (
   <>
@@ -69,7 +70,10 @@ export const ServicesPage: React.FC = () => (
                   <img
                     src={service.image}
                     alt=""
+                    width={1200}
+                    height={800}
                     loading="lazy"
+                    decoding="async"
                     className="aspect-[4/3] h-full w-full object-cover md:aspect-auto"
                   />
                 </div>
@@ -81,6 +85,29 @@ export const ServicesPage: React.FC = () => (
 
       {/* Closes the list, so the last row has a bottom edge like every other. */}
       <div className="border-t border-line" />
+
+      {/* The panels above only exist in the page once opened, so these links
+          are also how the detail pages are found — by a visitor who would
+          rather read than click, and by a crawler that never clicks at all. */}
+      <Reveal>
+        <div className="mt-10">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-ink-mute">
+            Each practice in full
+          </p>
+          <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
+            {SERVICES.map(service => (
+              <li key={service.id}>
+                <Link
+                  to={`/services/${service.id}`}
+                  className={`rounded-full text-base text-ink-soft underline decoration-brand-200 underline-offset-4 transition-colors hover:text-brand-600 hover:decoration-brand-400 focus-visible:outline-none ${TONE.light.focusRing}`}
+                >
+                  {service.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Reveal>
     </Band>
 
     {/* 3 — Ink. Industries as a scroll track. */}
@@ -132,7 +159,21 @@ export const ServicesPage: React.FC = () => (
       </Reveal>
     </Band>
 
-    {/* 4 — Light close. The footer is a wash band, so this one stays white. */}
+    {/* 4 — Wash. The questions people actually ask before emailing. Answers
+        sit in the markup whether or not a row is open, which is the point. */}
+    <Band tone="wash" size="lg">
+      <BandHeader
+        eyebrow="Questions"
+        title="Asked before the first email."
+        lede="If the answer you need is not here, the form on the contact page reaches a person who has read it."
+      />
+
+      <Reveal className="mt-16">
+        <FaqList items={FAQS.filter(faq => !faq.serviceId)} />
+      </Reveal>
+    </Band>
+
+    {/* 5 — Light close. The footer is a wash band, so this one stays white. */}
     <Band tone="light" size="lg">
       <Reveal>
         <div className="max-w-4xl">
@@ -155,9 +196,11 @@ export const ServicesPage: React.FC = () => (
                 className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
             </Link>
+            {/* /work is paused, so this points at the page the nav now calls
+                Success Stories. */}
             <Link
-              to="/work"
-              className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+              to="/success-stories"
+              className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               See the work
             </Link>

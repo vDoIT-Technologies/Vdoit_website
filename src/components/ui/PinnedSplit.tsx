@@ -91,8 +91,11 @@ export const PinnedSplit: React.FC<PinnedSplitProps> = ({ left, children }) => {
   }, []);
 
   if (!enabled || reducedMotion) {
+    // The band around this is `size="none"`, because the pinned track owns its
+    // own height. This fallback has to own its height too — without the
+    // padding the whole section butted against its neighbours on every phone.
     return (
-      <div className={`${CONTAINER} grid gap-12`}>
+      <div className={`${CONTAINER} grid gap-12 py-24 md:py-32`}>
         <div className="min-w-0">{left}</div>
         <div className="min-w-0">{children}</div>
       </div>

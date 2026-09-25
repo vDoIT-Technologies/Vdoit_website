@@ -110,7 +110,7 @@ export const Dialog: React.FC<DialogProps> = ({ open, onClose, labelledBy, child
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="absolute right-5 top-5 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white/90 text-ink backdrop-blur transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+              className="absolute right-5 top-5 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white/90 text-ink backdrop-blur transition-all hover:border-brand-300 hover:bg-brand-50 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               <X aria-hidden="true" className="h-5 w-5" />
             </button>

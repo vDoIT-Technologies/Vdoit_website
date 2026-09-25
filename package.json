@@ -1,13 +1,17 @@
 {
-  "name": "react-example",
+  "name": "vdoit-website",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
+    "build": "vite build && npm run build:ssr && npm run prerender && npm run seo:files",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr --emptyOutDir",
+    "prerender": "tsx scripts/prerender.ts",
+    "seo:files": "tsx scripts/generate-seo-files.ts",
     "preview": "vite preview",
-    "clean": "rm -rf dist server.js",
+    "clean": "rm -rf dist dist-ssr server.js",
     "lint": "tsc --noEmit"
   },
   "dependencies": {

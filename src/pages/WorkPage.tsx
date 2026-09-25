@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import {
+  ALL_ENGAGEMENTS,
   CASE_STUDIES,
   CLIENT_LOGOS,
   CREDENTIALS,
@@ -12,7 +13,7 @@ import { LogoMarquee } from '../components/ui/LogoMarquee';
 import { WorkShowcase } from '../components/ui/WorkShowcase';
 import { PageHero } from '../components/layout/PageHero';
 import { Reveal, RevealGroup, RevealItem } from '../components/ui/Reveal';
-import { CONTAINER } from '../lib/tone';
+import { CONTAINER, TONE } from '../lib/tone';
 
 export const WorkPage: React.FC = () => (
   <>
@@ -35,6 +36,30 @@ export const WorkPage: React.FC = () => (
       <Reveal>
         <WorkShowcase studies={CASE_STUDIES} label="Case studies" />
       </Reveal>
+
+      {/* The showcase renders one panel at a time, so ten of the eleven
+          engagements are not in the page at all. These links are how the rest
+          are reached — and how a crawler, which never clicks a tab, finds
+          them. */}
+      <Reveal>
+        <div className="mt-16 border-t border-line pt-10">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-ink-mute">
+            Every engagement in full
+          </p>
+          <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
+            {ALL_ENGAGEMENTS.map(engagement => (
+              <li key={engagement.id}>
+                <Link
+                  to={`/work/${engagement.id}`}
+                  className={`rounded-full text-base text-ink-soft underline decoration-brand-200 underline-offset-4 transition-colors hover:text-brand-600 hover:decoration-brand-400 focus-visible:outline-none ${TONE.light.focusRing}`}
+                >
+                  {engagement.shortName}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Reveal>
     </Band>
 
     {/* 3 — Ink. The one hard-contrast band on this page. */}
@@ -55,8 +80,13 @@ export const WorkPage: React.FC = () => (
               </p>
 
               <div className="min-w-0">
-                <h3 className="text-2xl font-semibold tracking-tight text-white md:text-3xl text-balance">
-                  {engagement.client}
+                <h3 className="text-balance text-2xl font-semibold tracking-tight text-white md:text-3xl">
+                  <Link
+                    to={`/work/${engagement.id}`}
+                    className={`rounded-full transition-colors hover:text-brand-300 focus-visible:outline-none ${TONE.ink.focusRing}`}
+                  >
+                    {engagement.client}
+                  </Link>
                 </h3>
                 <p className="mt-3 text-base leading-relaxed text-white/70">
                   {engagement.project}

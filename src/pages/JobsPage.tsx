@@ -81,7 +81,7 @@ export const JobsPage: React.FC = () => {
                   type="button"
                   aria-pressed={selected}
                   onClick={() => setDiscipline(item)}
-                  className={`rounded-full px-5 py-2.5 text-sm transition-all active:scale-[0.98] focus-visible:outline-none ${dark.focusRing} ${
+                  className={`rounded-full px-5 py-3 text-sm transition-all active:scale-[0.98] focus-visible:outline-none ${dark.focusRing} ${
                     selected
                       ? 'bg-white text-ink'
                       : 'border border-white/15 text-white/70 hover:text-white hover:border-white/40'
@@ -142,7 +142,7 @@ export const JobsPage: React.FC = () => {
                   </dl>
 
                   <a
-                    href={`mailto:${COMPANY_INFO.inquiryEmail}?subject=${encodeURIComponent(
+                    href={`mailto:${COMPANY_INFO.careersEmail}?subject=${encodeURIComponent(
                       `Application: ${job.title}`
                     )}`}
                     className={`group inline-flex items-center gap-2 self-start rounded-full px-6 py-3 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none lg:self-end ${dark.solidButton} ${dark.focusRing}`}
@@ -194,12 +194,12 @@ export const JobsPage: React.FC = () => {
 
             <div className="mt-10 flex flex-wrap gap-4">
               <a
-                href={`mailto:${COMPANY_INFO.inquiryEmail}?subject=${encodeURIComponent(
+                href={`mailto:${COMPANY_INFO.careersEmail}?subject=${encodeURIComponent(
                   'Open application'
                 )}`}
                 className={`group inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none ${light.solidButton} ${light.focusRing}`}
               >
-                {COMPANY_INFO.inquiryEmail}
+                {COMPANY_INFO.careersEmail}
                 <ArrowUpRight
                   aria-hidden="true"
                   className="w-4 h-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"

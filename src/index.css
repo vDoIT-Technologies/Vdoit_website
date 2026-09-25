@@ -17,11 +17,28 @@
 
   --color-ink: #0d0b1a;
   --color-ink-soft: #4a4760;
-  --color-ink-mute: #7c7a90;
+  /**
+   * Darkened from #7c7a90, which measured 4.16:1 on white and 3.75:1 on the
+   * brand-50 wash — under the 4.5:1 floor, and this token is always used at
+   * text-xs. It carries every eyebrow, index numeral and form label on the
+   * site, so the contrast failure was site-wide. Now 5.29:1 on white and
+   * 4.76:1 on wash.
+   */
+  --color-ink-mute: #6b6982;
   --color-line: #e8e6f0;
 }
 
 @layer base {
+  /*
+   * The header is fixed, so anything the browser scrolls to — an anchor, or a
+   * control the keyboard just tabbed to — lands underneath it. Padding the
+   * scroll port by more than the header's height keeps focus visible, which is
+   * WCAG 2.2's Focus Not Obscured.
+   */
+  html {
+    scroll-padding-top: 6.5rem;
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }

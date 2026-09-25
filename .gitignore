@@ -1,6 +1,7 @@
 node_modules/
 build/
 dist/
+dist-ssr/
 coverage/
 .DS_Store
 *.log
@@ -8,3 +9,6 @@ coverage/
 !.env.example
 # Claude Code project config (skills, agents, local settings)
 .claude/
+
+# Playwright MCP scratch output
+.playwright-mcp/

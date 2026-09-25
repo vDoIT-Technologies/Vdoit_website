@@ -59,10 +59,22 @@ interface BandHeaderProps {
   title: React.ReactNode;
   lede?: string;
   className?: string;
+  /**
+   * The heading level. `h2` is right for a band inside a page that already has
+   * an `h1`; pass `h1` on a page whose first band opens it, so the page still
+   * has exactly one.
+   */
+  as?: 'h1' | 'h2';
 }
 
 /** Eyebrow, display heading, optional lede. One per band. */
-export const BandHeader: React.FC<BandHeaderProps> = ({ eyebrow, title, lede, className = '' }) => {
+export const BandHeader: React.FC<BandHeaderProps> = ({
+  eyebrow,
+  title,
+  lede,
+  className = '',
+  as: Heading = 'h2',
+}) => {
   const t = useTone();
 
   return (
@@ -72,9 +84,9 @@ export const BandHeader: React.FC<BandHeaderProps> = ({ eyebrow, title, lede, cl
           {eyebrow}
         </p>
       )}
-      <h2 className={`text-4xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] ${t.heading} text-balance`}>
+      <Heading className={`text-4xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] ${t.heading} text-balance`}>
         {title}
-      </h2>
+      </Heading>
       {lede && (
         <p className={`mt-6 text-lg md:text-xl leading-relaxed max-w-2xl ${t.body}`}>
           {lede}

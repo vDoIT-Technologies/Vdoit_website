@@ -1,57 +1,28 @@
 import React from 'react';
 import { ArrowUpRight, Linkedin } from 'lucide-react';
 import { COMPANY_INFO, LINKEDIN_POSTS } from '../data/companyData';
+
 import { Band, BandHeader } from '../components/ui/Band';
-import { PageHero } from '../components/layout/PageHero';
+
 import { Reveal } from '../components/ui/Reveal';
 
 const [featured, ...rest] = LINKEDIN_POSTS;
 
 export const UpdatesPage: React.FC = () => (
   <>
-    {/* 1 — White page header. */}
-    <PageHero
-      eyebrow="Updates"
-      title={
-        <>
-          What we are
-          <br />
-          writing about.
-        </>
-      }
-    >
-      <div className="mt-8 flex flex-wrap items-center gap-4">
-        <a
-          href={COMPANY_INFO.linkedinUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group inline-flex items-center gap-2 rounded-full bg-brand-600 px-7 py-3.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2"
-        >
-          <Linkedin aria-hidden="true" className="h-4 w-4" />
-          Follow on LinkedIn
-          <ArrowUpRight
-            aria-hidden="true"
-            className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-          />
-        </a>
-        <p className="text-sm text-ink-mute">{COMPANY_INFO.linkedinFollowers} followers</p>
-      </div>
-    </PageHero>
-
-    {/* 2 — Light. The featured post gets the room a featured post deserves. */}
+    {/* 1 — Light. No page header: the latest post opens the page, which is
+        what someone who clicked "Updates" came for. Its own title is the
+        page's h1, and the band's top padding is what clears the fixed
+        header now that there is no hero above it. The Follow button and the
+        follower count live in the ink band at the foot of the page. */}
     {featured && (
-      <Band tone="light" size="sm">
-        <Reveal>
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-ink-mute">Featured</p>
-        </Reveal>
-
+      <Band tone="light" size="none" className="pb-12 pt-28 md:pb-16 md:pt-32">
         <Reveal delay={0.05}>
-          <a
-            href={featured.linkedinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group mt-8 block border-t border-line pt-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
-          >
+          {/* Not a link wrapping the whole post. The featured slot now carries
+              the post's own text, and a six-paragraph anchor is one enormous
+              link target that a screen reader reads out as a single line. The
+              link is the one at the foot, where it belongs. */}
+          <article>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <span className="text-xs font-medium uppercase tracking-[0.18em] text-brand-600">
                 {featured.category}
@@ -62,22 +33,39 @@ export const UpdatesPage: React.FC = () => (
               </span>
             </div>
 
-            <h2 className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-ink transition-colors duration-300 group-hover:text-brand-600 md:text-6xl">
+            <h1 className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-ink md:text-6xl">
               {featured.title}
-            </h2>
+            </h1>
 
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink-soft md:text-xl">
-              {featured.excerpt}
-            </p>
+            {/* The post as posted. Falls back to the summary for entries that
+                only carry one — every other post in the list. */}
+            {featured.fullContent ? (
+              <div className="mt-8 max-w-2xl space-y-5">
+                {featured.fullContent.split('\n\n').map(paragraph => (
+                  <p key={paragraph} className="text-lg leading-relaxed text-ink-soft md:text-xl">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            ) : (
+              <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink-soft md:text-xl">
+                {featured.excerpt}
+              </p>
+            )}
 
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <span className="inline-flex items-center gap-2 text-sm font-medium text-ink">
+              <a
+                href={featured.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 rounded-full text-sm font-medium text-ink transition-colors hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
                 Read on LinkedIn
                 <ArrowUpRight
                   aria-hidden="true"
                   className="h-4 w-4 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 />
-              </span>
+              </a>
               <ul className="flex flex-wrap gap-x-4 gap-y-2">
                 {featured.tags.map(tag => (
                   <li key={tag} className="text-sm text-ink-mute">
@@ -86,7 +74,7 @@ export const UpdatesPage: React.FC = () => (
                 ))}
               </ul>
             </div>
-          </a>
+          </article>
         </Reveal>
       </Band>
     )}
@@ -155,7 +143,7 @@ export const UpdatesPage: React.FC = () => (
               href={COMPANY_INFO.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group mt-8 inline-flex items-center gap-2 rounded-full border border-brand-200 px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-400 hover:bg-white active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
+              className="group mt-8 inline-flex items-center gap-2 rounded-full border border-brand-200 px-7 py-3.5 text-sm font-medium text-ink transition-all hover:border-brand-400 hover:bg-white active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-50"
             >
               Follow on LinkedIn
               <ArrowUpRight

@@ -1,0 +1,15 @@
+# Netlify fallback rules. Kept for deploy portability; the site's own host is
+# Apache/nginx (see .htaccess and deploy/nginx.conf).
+#
+# There is deliberately NO `/* /index.html 200` catch-all any more. Every route
+# is prerendered to its own file at build time (dist/services/index.html and so
+# on), so real files already answer every valid URL. A catch-all would serve the
+# home page's HTML for every path and throw away all of that.
+#
+# What is left is the dead-end: anything with no file behind it gets a genuine
+# 404, not a soft duplicate of the home page.
+# /products was renamed to /success-stories. Kept permanently so old links,
+# bookmarks and anything already indexed still land.
+/products  /success-stories  301!
+
+/*  /404.html  404
