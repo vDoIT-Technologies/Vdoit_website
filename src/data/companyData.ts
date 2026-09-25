@@ -68,8 +68,8 @@ export const COMPANY_INFO = {
 
 export const FOUNDERS: FounderProfile[] = [
   {
-    name: "Narinder  Kamra",
-    role: "Co-Founder & Chief Executive Officer",
+    name: "Narinder Kamra",
+    role: "Founder and CEO",
     experienceYears: "15+ Years US & Global Tech Leadership",
     usExperienceHighlight:
       "Extensive Silicon Valley & US Enterprise Consulting Background",
@@ -85,7 +85,7 @@ export const FOUNDERS: FounderProfile[] = [
   },
   {
     name: "Neetu Gupta",
-    role: "Co-Founder & Director of Operations & Strategy",
+    role: "Founder and CTO",
     experienceYears: "15+ Years Enterprise Strategy & Governance",
     usExperienceHighlight:
       "International Operations & Cross-Border Delivery Excellence",
@@ -496,7 +496,7 @@ export const TIMELINE_MILESTONES = [
     year: "2015",
     title: "Founding & US-Grade Engineering Standards",
     description:
-      "Founded by Narinder  Kamra and Neetu Gupta following 15+ years of US and global enterprise technology experience. Established the core vision of high-value, client-first digital engineering.",
+      "Founded by Narinder Kamra and Neetu Gupta following 15+ years of US and global enterprise technology experience. Established the core vision of high-value, client-first digital engineering.",
   },
   {
     year: "2018",
@@ -846,8 +846,8 @@ export const FAQS: FaqItem[] = [
 
 export const MANAGEMENT_TEAM: TeamMember[] = [
   {
-    name: "Narinder  Kamra",
-    role: "Co-Founder & Chief Executive Officer",
+    name: "Narinder Kamra",
+    role: "Founder and CEO",
     initials: "NK",
     image: "/images/team/narinder-kamra.webp",
     bio: "Founded VDOIT in 2015 after 15+ years of technology leadership across the United States and global digital ecosystems. Leads the strategic evolution into enterprise AI, large language model orchestration, and predictive business intelligence.",
@@ -860,7 +860,7 @@ export const MANAGEMENT_TEAM: TeamMember[] = [
   },
   {
     name: "Neetu Gupta",
-    role: "Co-Founder & Director, Operations & Strategy",
+    role: "Founder and CTO",
     initials: "NG",
     image: "/images/team/neetu-gupta.webp",
     bio: "Co-founded VDOIT in 2015, bringing operational leadership honed across international technology markets. Oversees global delivery governance, client value management, and talent development across the engineering organisation.",
