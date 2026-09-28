@@ -80,7 +80,7 @@ export const ContactPage: React.FC = () => {
       const response = await fetch(`${API_BASE}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, website: honeypot }),
+        body: JSON.stringify({ ...form, spamTrap: honeypot }),
       });
 
       // A proxy in front of the API can answer with HTML, so a failed parse is
@@ -375,18 +375,31 @@ export const ContactPage: React.FC = () => {
                     which keeps a field readable to screen readers — and a
                     mystery input is worse for that visitor than for a bot.
                     Hidden from assistive tech and out of the tab order, so it
-                    only ever reaches something filling inputs blind. */}
+                    only ever reaches something filling inputs blind.
+
+                    It used to be called `website`, with a matching label, and
+                    that name is why real enquiries went missing: Chrome's
+                    autofill and every password manager recognise a website
+                    field and fill it in, tripping the trap on the visitor's
+                    behalf. The backend then answers 200 with a reference that
+                    means nothing, so the form reports success and no mail is
+                    ever sent. `spamTrap` matches no autofill heuristic, and
+                    the three attributes below opt out of the managers that
+                    guess from the label instead of the name. */}
                 <div
                   aria-hidden="true"
                   className="absolute -left-[9999px] h-px w-px overflow-hidden"
                 >
-                  <label htmlFor="website">Website</label>
+                  <label htmlFor="spamTrap">Leave this field empty</label>
                   <input
-                    id="website"
-                    name="website"
+                    id="spamTrap"
+                    name="spamTrap"
                     type="text"
                     tabIndex={-1}
                     autoComplete="off"
+                    data-lpignore="true"
+                    data-1p-ignore="true"
+                    data-form-type="other"
                     value={honeypot}
                     onChange={event => setHoneypot(event.target.value)}
                   />
